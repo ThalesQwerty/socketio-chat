@@ -2,6 +2,10 @@ import React from "react";
 
 import User from "./User";
 
+import {
+    List
+} from "@material-ui/core";
+
 const USERS = [
     {
         name: "User 1",
@@ -33,7 +37,9 @@ const loadUsers = (users) => {
 
 export default (props) =>
 <>
+    <List component="nav" aria-label="main mailbox folders">
     {
         loadUsers(USERS)
     }
+    </List>
 </>
