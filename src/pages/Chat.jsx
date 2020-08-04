@@ -11,10 +11,10 @@ import {
 } from "@material-ui/core";
 
 export default () =>
-<div style={{height: '100vh', display: 'flex'}}>
-    <Navbar/>
-        <Grid container style={{flexGrow: 1}}>
-            <Main/>
-            <Sidebar/>
-        </Grid>  
-</div>
+    <div style={{ height: '100vh', display: 'flex' }}>
+        <Navbar />
+        <Grid container style={{ flexGrow: 1 }}>
+            <Main />
+            <Sidebar />
+        </Grid>
+    </div>
