@@ -12,10 +12,5 @@ body {
     font-family: 'Roboto', sans-serif;
     width: 100vw;
     height: 100vw;
-    overflow: hidden;
-}
-
-.Layout {
-    padding: 8px;
-    padding-top: 64px;
+    /* overflow: hidden; */
 }
