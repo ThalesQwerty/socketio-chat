@@ -1,24 +1,17 @@
 import React from "react";
 
-import User from "./User";
+import UserDisplay from "./UserDisplay";
 
 import {
     List
 } from "@material-ui/core";
 
+import User from "../../classes/User.js";
+
 const USERS = [
-    {
-        name: "User 1",
-        color: "red"
-    },
-    {
-        name: "User 2",
-        color: "blue"
-    },
-    {
-        name: "User 3",
-        color: "green"
-    }
+    new User("User 1", "red"),
+    new User("User 2", "blue"),
+    new User("User 3", "green")
 ];
 
 const loadUsers = (users) => {
@@ -28,7 +21,7 @@ const loadUsers = (users) => {
         const user = users[i];
 
         userList.push(
-            <User key={i} info={user}/>
+            <UserDisplay key={i} info={user}/>
         );
     }
 
