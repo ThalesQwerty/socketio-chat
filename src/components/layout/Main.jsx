@@ -63,7 +63,7 @@ class Main extends React.Component {
 
     render() {
         return (
-            <Grid item xl={10} lg={9} md={8} sm={7} xs={6} style={{ paddingTop: '2rem', paddingBottom: '3rem' }}>
+            <Grid item xl={10} lg={9} md={8} sm={7} xs={6} style={{ paddingTop: '2.5rem', paddingLeft: '0.5rem', paddingBottom: '3rem' }}>
                 <div style={{
                     display: 'flex',
                     flexDirection: 'column',
