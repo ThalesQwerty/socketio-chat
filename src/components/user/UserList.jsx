@@ -9,10 +9,24 @@ import {
 import User from "../../classes/User.js";
 
 const USERS = [
-    new User("User 1", "red"),
-    new User("User 2", "blue"),
-    new User("User 3", "green")
+    
 ];
+
+for (let i = 0; i < 50; i++) {
+    const colors = [
+        '#4caf50',
+        '#f44336',
+        '#ffcd38',
+        '#3f50b5',
+        '#35baf6',
+        '#ffa726',
+        '#bb6bc9'
+    ];
+
+    USERS.push(
+        new User("User " + (i + 1), colors[Math.floor(Math.random() * colors.length)])
+    );
+}
 
 const loadUsers = (users) => {
     const userList = [];
@@ -30,7 +44,7 @@ const loadUsers = (users) => {
 
 export default (props) =>
 <>
-    <List component="nav" aria-label="main mailbox folders">
+    <List component="nav" aria-label="main mailbox folders"  style={{ marginBottom: '1rem' }}>
     {
         loadUsers(USERS)
     }
