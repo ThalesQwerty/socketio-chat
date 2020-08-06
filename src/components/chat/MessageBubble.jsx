@@ -12,7 +12,6 @@ class MessageBubble extends React.Component {
         super(props);
 
         this.props = props;
-        this.styles = Message.styles();
         this.bubble = React.createRef();
     }
 
@@ -22,9 +21,9 @@ class MessageBubble extends React.Component {
                 display: 'flex', 
                 width: '100%',
                 justifyContent: this.props.info.type == 'sent' ? 'flex-end' : 'flex-start',
-                marginTop: '1rem' 
+                marginTop: '1rem'
             }}>
-                <Box ref={this.bubble} boxShadow={5} padding='1rem' style={this.styles[this.props.type] || {}}>
+                <Box ref={this.bubble} boxShadow={5} padding='1rem' style={Message.style(this.props.info.type) || {}}>
                     {this.props.children}
                 </Box>
             </div>
@@ -32,8 +31,6 @@ class MessageBubble extends React.Component {
     }
 
     componentDidMount() {
-        console.log(this.bubble.current.style);
-
         setTimeout(() => {
             const div = this.bubble.current.style;
 

@@ -9,12 +9,7 @@ class Message {
     static SENT = "sent";
     static RECEIVED = "received";
 
-    static styles() {
-        const types = [
-            Message.SENT,
-            Message.RECIEVED
-        ];
-
+    static style(type) {
         const styleBasis = {
             borderRadius: '1rem',
             maxWidth: '60%',
@@ -27,13 +22,21 @@ class Message {
             transitionTimingFunction: 'ease-out'
         };
 
-        var styleList = {};
+        let style = JSON.parse(JSON.stringify(styleBasis));
 
-        for (const type of types) {
-            styleList[type] = JSON.parse(JSON.stringify(styleBasis));
+        switch (type) {
+            case Message.SENT:
+                style.borderTopRightRadius = '0';
+                break;
+            case Message.RECEIVED:
+                style.borderTopLeftRadius = '0';
+                break;
         }
 
-        return styleList;
+        console.log(type);
+        console.log(style);
+
+        return style;
     }
 }
 
