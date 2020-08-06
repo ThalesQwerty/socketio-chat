@@ -15,8 +15,13 @@ class Message extends EasilyReadable {
         });
     }
 
-    static LEFT = "received";
-    static RIGHT = "sent";
+    static ALIGN_LEFT = "received";
+    static ALIGN_RIGHT = "sent";
+
+    static THREAD_SINGLE = "single-message";
+    static THREAD_FIRST = "first-message";
+    static THREAD_MIDDLE = "middle-message";
+    static THREAD_LAST = "last-message";
 }
 
 export default Message;

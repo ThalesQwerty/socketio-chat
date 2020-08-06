@@ -20,7 +20,7 @@ class Main extends React.Component {
 
         const messages = [
             new Message("Hello there, how are you?")
-                .align(Message.LEFT)
+                .align(Message.ALIGN_LEFT)
                 .author(User.random())
         ];
 
@@ -33,7 +33,7 @@ class Main extends React.Component {
         if (e.keyCode == 13) {
             this.newMessage(
                 new Message(e.target.value)
-                    .align(Message.RIGHT)
+                    .align(Message.ALIGN_RIGHT)
                     .author(User.me())
             );
 
@@ -58,7 +58,7 @@ class Main extends React.Component {
 
             this.newMessage(
                 new Message(selected)
-                    .align(Message.LEFT)
+                    .align(Message.ALIGN_LEFT)
                     .author(User.random())
             );
 
