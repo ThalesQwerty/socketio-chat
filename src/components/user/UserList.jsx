@@ -35,7 +35,7 @@ const loadUsers = (users) => {
         const user = users[i];
 
         userList.push(
-            <UserDisplay key={i} info={user}/>
+            <UserDisplay key={i} user={user}/>
         );
     }
 

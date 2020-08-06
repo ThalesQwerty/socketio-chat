@@ -30,9 +30,9 @@ class Main extends React.Component {
     }
 
     handleEnter = (e) => {
-        if (e.keyCode == 13) {
+        if (e.keyCode == 13 && e.target.value.trim().length > 0) {
             this.newMessage(
-                new Message(e.target.value)
+                new Message(e.target.value.trim())
                     .align(Message.ALIGN_RIGHT)
                     .author(User.me())
             );
@@ -62,7 +62,7 @@ class Main extends React.Component {
                     .author(User.random())
             );
 
-        }, Math.random() * 1000 + 500);
+        }, Math.random() * 3000 + 2000);
     }
 
     newMessage = (message, callback = () => { }) => {

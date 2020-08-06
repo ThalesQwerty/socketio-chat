@@ -6,7 +6,7 @@ import {
 
 const defaultImage = (props) => (
     <div style={{
-        backgroundColor: props.info.color || 'gray',
+        backgroundColor: props.user.color || 'gray',
         borderRadius: '50%',
 
         width: '2rem',

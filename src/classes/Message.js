@@ -1,14 +1,16 @@
-import EasilyReadable from "./utils/EasilyReadable";
+import EasilyReadable from "../utils/EasilyReadable";
 
 class Message extends EasilyReadable {
     constructor(content) {
         super();
 
         this.content = content;
-        this.attributes = {};
+        this.attributes = {
+            align: Message.ALIGN_LEFT,
+        };
 
         this.createFunctions(Message, [
-            "type", "author", "align"
+            "author", "align",
         ], (attr, value) => {
             this.attributes[attr] = value;
             return this

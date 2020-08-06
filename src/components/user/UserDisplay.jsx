@@ -12,7 +12,7 @@ import UserName from "./UserName";
 export default (props) =>
 <>
     <ListItem button>
-        <UserName info={props.info}/>
+        <UserName user={props.user}/>
     </ListItem>
 
     {/* <Box boxShadow={1} style={{

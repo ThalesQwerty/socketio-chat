@@ -11,7 +11,10 @@ import {
 } from "@material-ui/icons";
 
 export default (props) =>
-    <Grid container spacing={1} alignItems="stretch" style={{ width: '100%' }}>
+    <Grid container spacing={1} alignItems="stretch" style={{ 
+        width: '100%',
+        paddingTop: '2rem' 
+    }}>
         <Grid item style={{ display: 'flex', alignItems: 'center' }}>
             <ChatBubbleIcon />
         </Grid>

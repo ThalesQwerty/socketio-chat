@@ -8,6 +8,6 @@ import UserImage from "./UserImage";
 
 export default props =>
 <>
-    <UserImage info={props.info}/>
-    <ListItemText primary={props.info.name} marginRight={props.marginRight} />
+    <UserImage user={props.user}/>
+    <ListItemText primary={props.user.name} marginRight={props.marginRight} />
 </>

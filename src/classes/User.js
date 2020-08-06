@@ -10,11 +10,27 @@ class User {
     static list = [];
 
     static random() {
-        return User.list[Math.floor(Math.random() * User.list.length)];
+        do {
+            var selected = User.list[Math.floor(Math.random() * User.list.length)];
+        } while (
+            User.same([selected, User.me()])
+        );
+        
+        return selected;
     }
 
     static me() {
         return User.list[0];
+    }
+
+    static same(users) {
+        for (let i = 1; i < users.length; i++) {
+            if (users[i].id != users[i - 1].id) {
+                return false;
+            }
+        }
+
+        return true;
     }
 }
 
