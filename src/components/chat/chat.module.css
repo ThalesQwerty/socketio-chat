@@ -1,0 +1,45 @@
+.fadeInWait {
+    transform: translateY(1rem);
+    opacity: 0;
+}
+
+.fadeInDone {
+    transform: none;
+    opacity: 1;
+    transition-property: transform, opacity;
+    transition-duration: 0.25s;
+}
+
+.parentDiv {
+    display: flex; 
+    width: 100%;
+    margin-top: 1rem;
+    justify-content: flex-start;
+}
+
+.parentDiv.sent {
+    flex-direction: row-reverse;
+}
+
+.parentDiv.received {
+    flex-direction: row;
+}
+
+.message {
+    border-radius: 1rem;
+    max-width: 60%;
+
+    transition-property: opacity, transform;
+    transition-duration: 0.4s;
+    transition-timing-function: ease-out;
+}
+
+.message.sent {
+    border-top-right-radius: 0;
+    margin-right: 1rem;
+}
+
+.message.received {
+    border-top-left-radius: 0;
+    margin-left: 1rem;
+}

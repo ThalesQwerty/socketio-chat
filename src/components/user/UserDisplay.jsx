@@ -7,13 +7,12 @@ import {
     ListItemText
 } from "@material-ui/core";
 
-import UserImage from "./UserImage";
+import UserName from "./UserName";
 
 export default (props) =>
 <>
     <ListItem button>
-        <UserImage info={props.info}/>
-        <ListItemText primary={props.info.name} />
+        <UserName info={props.info}/>
     </ListItem>
 
     {/* <Box boxShadow={1} style={{

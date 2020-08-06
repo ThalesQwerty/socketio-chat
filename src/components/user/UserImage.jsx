@@ -16,7 +16,8 @@ const defaultImage = (props) => (
         justifyContent: 'center',
         alignContent: 'center',
 
-        marginRight: '1rem'
+        marginRight: props.marginRight || '1rem',
+        marginLeft: props.marginLeft || '0rem'
     }}>
         <PersonIcon style={{
             fontSize: '2em',

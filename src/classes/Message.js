@@ -1,4 +1,4 @@
-import EasilyReadable from "./EasilyReadable";
+import EasilyReadable from "./utils/EasilyReadable";
 
 class Message extends EasilyReadable {
     constructor(content) {
@@ -8,34 +8,21 @@ class Message extends EasilyReadable {
         this.attributes = {};
 
         this.createFunctions(Message, [
-            "type", "author"
+            "type", "author", "align"
         ], (attr, value) => {
             this.attributes[attr] = value;
             return this
         });
     }
-    
-    // type(type) {
-    //     this.attributes.type = type;
-    //     return this;
-    // }
 
-    // author(user) {
-    //     this.attributes.author = user;
-    //     return this;
-    // }
-
-    static SENT = "sent";
-    static RECEIVED = "received";
+    static LEFT = "received";
+    static RIGHT = "sent";
 
     static style(type) {
         const styleBasis = {
             borderRadius: '1rem',
             maxWidth: '60%',
         
-            transform: 'translateY(1rem)',
-            opacity: '0',
-
             transitionProperty: 'opacity, transform',
             transitionDuration: '0.4s',
             transitionTimingFunction: 'ease-out'
