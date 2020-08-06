@@ -9,14 +9,19 @@ import {
 import MessageList from "../chat/MessageList";
 import TextInput from "../chat/TextInput";
 
-import Message from "../../classes/Message.js";
+import {
+    Message,
+    User
+} from "../../classes/";
 
 class Main extends React.Component {
     constructor(props) {
         super(props);
 
         const messages = [
-            new Message("Hello there, how are you?", Message.RECEIVED)
+            new Message("Hello there, how are you?")
+                .type(Message.RECEIVED)
+                .author(User.random())
         ];
 
         this.state = {
@@ -26,7 +31,11 @@ class Main extends React.Component {
 
     handleEnter = (e) => {
         if (e.keyCode == 13) {
-            this.newMessage(e.target.value, Message.SENT);
+            this.newMessage(
+                new Message(e.target.value)
+                    .type(Message.SENT)
+                    .author(User.me())
+            );
 
             this.mockAnswer();
 
@@ -46,13 +55,17 @@ class Main extends React.Component {
 
         setTimeout(() => {
             const selected = answers[Math.floor(Math.random() * answers.length)];
-            this.newMessage(selected, Message.RECEIVED);
+
+            this.newMessage(
+                new Message(selected)
+                    .type(Message.RECEIVED)
+                    .author(User.random())
+            );
+
         }, Math.random() * 1000 + 500);
     }
 
-    newMessage = (content, type, callback = () => { }) => {
-        const message = new Message(content, type);
-
+    newMessage = (message, callback = () => { }) => {
         let newArray = this.state.messages.slice(0);
         newArray.push(message);
 

@@ -1,10 +1,29 @@
-class Message {
-    constructor(content, type) {
+import EasilyReadable from "./EasilyReadable";
+
+class Message extends EasilyReadable {
+    constructor(content) {
+        super();
+
         this.content = content;
-        this.attributes = {
-            type: type
-        };
+        this.attributes = {};
+
+        this.createFunctions(Message, [
+            "type", "author"
+        ], (attr, value) => {
+            this.attributes[attr] = value;
+            return this
+        });
     }
+    
+    // type(type) {
+    //     this.attributes.type = type;
+    //     return this;
+    // }
+
+    // author(user) {
+    //     this.attributes.author = user;
+    //     return this;
+    // }
 
     static SENT = "sent";
     static RECEIVED = "received";
