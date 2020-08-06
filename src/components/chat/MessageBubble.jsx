@@ -63,7 +63,6 @@ class MessageBubble extends React.Component {
                             STYLES[this.info.align]
                         ])
                     }
-                    // style={Message.style(this.info.align) || {}}
                 >
                     {this.content}
                 </Box>
