@@ -1,3 +1,5 @@
+@import "../../base.scss";
+
 .main {
     /* padding-left: 1rem;
     padding-bottom: 3rem; */
@@ -10,6 +12,7 @@
     flex-direction: column;
     align-items: stretch;
     height: 100%;
+    background-color: $dark1;
 }
 
 .sidebar {
@@ -17,6 +20,7 @@
     height: 100% !important;
     transition-duration: 0.4s;
     transition-timing-function: ease-out;
+    background-color: $dark3;
 }
 
 .sidebar.hidden {

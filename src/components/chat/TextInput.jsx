@@ -22,8 +22,14 @@ export default (props) =>
         </Grid>
         <Grid item className={STYLES.textFieldParent}>
             <TextField 
-                label="Type your message" 
-                className={STYLES.textField} 
+                label="Type your message"
+                className={STYLES.textField}
+                InputProps={{
+                    className: STYLES.textFieldValue
+                }}
+                InputLabelProps={{
+                    className: STYLES.textFieldLabel
+                }}
                 variant="outlined" 
                 onKeyDown={props.onEnter} 
             />

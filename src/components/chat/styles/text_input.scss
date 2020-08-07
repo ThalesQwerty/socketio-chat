@@ -2,6 +2,7 @@
 
 .textDiv {
     padding: 2rem 1.5rem;
+    background-color: $dark2;
 }
 
 .chatBubbleIcon {
@@ -16,4 +17,12 @@
 
 .textField {
     width: 100%;
+}
+
+.textFieldValue {
+    color: $light0 !important;
+}
+
+.textFieldLabel {
+    color: $dark5 !important;
 }
