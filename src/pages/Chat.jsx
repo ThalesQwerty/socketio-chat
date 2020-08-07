@@ -10,20 +10,47 @@ import {
     Box
 } from "@material-ui/core";
 
-export default () =>
-    <Box boxShadow={1} style={{ 
-        height: '100%', 
-        width: '100%', 
+class Chat extends React.Component {
+    constructor(props) {
+        super(props);
 
-        maxWidth: '100rem',
-        maxHeight: '50rem',
+        this.state = {
+            layout: {
+                userList: true
+            }
+        }
+    }
 
-        display: 'flex',
-        flexDirection: 'column'
-    }}>
-        <Navbar />
-        <Grid container style={{ flexGrow: '1', overflow: 'hidden' }}>
-            <Main />
-            <Sidebar />
-        </Grid>
-    </Box>
+    toggleUserList = (e) => {
+        const previous = this.state.layout.userList;
+
+        this.setState({
+            layout: {
+                userList: !previous
+            }
+        });
+    }
+
+    render() {
+        return (
+            <Box boxShadow={1} style={{ 
+                height: '100%', 
+                width: '100%', 
+        
+                maxWidth: '100rem',
+                maxHeight: '50rem',
+        
+                display: 'flex',
+                flexDirection: 'column'
+            }}>
+                <Navbar toggleUserList={this.toggleUserList} />
+                <Grid container style={{ flexGrow: '1', overflow: 'hidden' }}>
+                    <Main />
+                    <Sidebar visible={this.state.layout.userList}/>
+                </Grid>
+            </Box>
+        );
+    }
+}
+
+export default Chat;

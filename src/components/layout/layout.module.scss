@@ -15,8 +15,16 @@
 .sidebar {
     width: 20rem;
     height: 100% !important;
+    transition-duration: 0.4s;
+    transition-timing-function: ease-out;
 }
 
-.navbar {
-    
+.sidebar.hidden {
+    transform: translateX(20rem);
+    margin-left: -20rem;
+    transition-timing-function: ease-in;
 }
+
+// .navbar {
+    
+// }
