@@ -12,7 +12,7 @@ import STYLES from "./chat.module.scss";
 
 export default props =>
     <Box 
-        boxShadow={5} 
+        boxShadow={1} 
         padding='1rem' 
         className={
             MultipleStyles([

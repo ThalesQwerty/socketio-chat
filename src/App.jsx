@@ -1,8 +1,16 @@
 import React from "react";
+import { createMuiTheme } from '@material-ui/core/styles';
+import { ThemeProvider } from '@material-ui/styles';
 
 import Chat from "./pages/Chat";
 
 import "./App.scss";
+
+const THEME = createMuiTheme({
+    palette: {
+      type: 'dark',
+    },
+});
 
 
 export default () =>

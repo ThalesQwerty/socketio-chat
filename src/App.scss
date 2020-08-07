@@ -17,11 +17,11 @@ body {
     height: 100vh;
     overflow: hidden;
     color: $light0;
-    background-color: $dark0;
+    background-color: $bg_body;
 }
 
 *::-webkit-scrollbar {
-    width: 0.4em;
+    width: 0.25rem;
 }
 
 *::-webkit-scrollbar-track {
@@ -30,6 +30,5 @@ body {
 }
 
 *::-webkit-scrollbar-thumb {
-    background-color: rgba(0, 0, 0, 0.1);
-    border: 1px solid slategrey;
+    background-color: rgba(255, 255, 255, 0.04);
 }
