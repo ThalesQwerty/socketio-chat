@@ -1,3 +1,5 @@
+/* MESSAGE TRANSITIONS */
+
 .fadeInWait {
     transform: translateY(1rem);
     opacity: 0;
@@ -10,22 +12,38 @@
     transition-duration: 0.25s;
 }
 
-.parentDiv {
+/* MESSAGE BUBBLES */
+
+.messageBox {
+    flex-grow: 1;
+
+    display: flex;
+    flex-direction: column; 
+    justify-content: flex-start;
+
+    overflow-y: scroll;
+    overflow-x: hidden;
+    
+    padding-left: 1.5rem;
+    padding-right: 1.5rem;
+}
+
+.messageParentDiv {
     display: flex; 
     width: 100%;
     margin-top: 1rem;
     justify-content: flex-start;
 }
 
-.parentDiv.sent {
+.messageParentDiv.sent {
     flex-direction: row-reverse;
 }
 
-.parentDiv.received {
+.messageParentDiv.received {
     flex-direction: row;
 }
 
-.childDiv {
+.messageChildDiv {
     max-width: 60%;
 }
 
@@ -61,18 +79,4 @@
 .message.last-message.sent, .message.middle-message.sent {
     border-top-right-radius: 1rem;
     margin-right: 3rem;
-}
-
-.author {
-    margin-bottom: 0.5rem;
-}
-
-.author.sent {
-    padding-right: 1rem;
-    text-align: right;
-}
-
-.author.received {
-    padding-left: 1rem;
-    text-align: left;
 }

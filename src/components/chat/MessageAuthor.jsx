@@ -6,7 +6,7 @@ import {
     MultipleStyles
 } from "../../utils";
 
-import STYLES from "./chat.module.css";
+import STYLES from "./chat.module.scss";
 
 export default props =>
 <>

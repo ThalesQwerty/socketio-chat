@@ -2,10 +2,12 @@ import React from "react";
 
 import Chat from "./pages/Chat";
 
-import "./App.css";
+import "./App.scss";
 
 
 export default () =>
 <>
-    <Chat/>
+    <div style={{ height: '100vh', width: '100%', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+        <Chat/>
+    </div>
 </>

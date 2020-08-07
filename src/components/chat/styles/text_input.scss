@@ -1,0 +1,19 @@
+@import "../../../base.scss";
+
+.textDiv {
+    padding: 2rem 1.5rem;
+}
+
+.chatBubbleIcon {
+    display: flex;
+    align-items: center;
+    margin-right: 0.5rem !important;
+}
+
+.textFieldParent {
+    flex-grow: 1;
+}
+
+.textField {
+    width: 100%;
+}

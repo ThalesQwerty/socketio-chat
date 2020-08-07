@@ -11,10 +11,19 @@ import {
 } from "@material-ui/core";
 
 export default () =>
-    <div style={{ height: '100vh', display: 'flex' }}>
+    <Box boxShadow={1} style={{ 
+        height: '100%', 
+        width: '100%', 
+
+        maxWidth: '100rem',
+        maxHeight: '50rem',
+
+        display: 'flex',
+        flexDirection: 'column'
+    }}>
         <Navbar />
-        <Grid container style={{ flexGrow: 1 }}>
+        <Grid container style={{ flexGrow: '1', overflow: 'hidden' }}>
             <Main />
             <Sidebar />
         </Grid>
-    </div>
+    </Box>

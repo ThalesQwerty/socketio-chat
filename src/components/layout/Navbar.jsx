@@ -10,8 +10,10 @@ import {
     Forum as ForumIcon
 } from "@material-ui/icons"
 
+import STYLES from "./layout.module.scss";
+
 export default () =>
-    <AppBar position="absolute">
+    <AppBar position="relative" style={{height: '4rem'}}>
         <Toolbar>
             <Typography style={{display: 'flex', alignItems: 'center'}}>
                 <ForumIcon style={{marginRight: '0.5rem'}}/>
