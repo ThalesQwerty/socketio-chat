@@ -51,7 +51,7 @@
 }
 
 .message {
-    border-radius: 1rem;
+    border-radius: 0.5rem;
     display: block;
     word-break:break-all;
 
@@ -73,15 +73,15 @@
 }
 
 .message.last-message, .message.middle-message {
-    margin-top: -0.5rem;
+    margin-top: -0.75rem;
 }
 
 .message.last-message.received, .message.middle-message.received {
-    border-top-left-radius: 1rem;
+    border-top-left-radius: 0.5rem;
     margin-left: 3rem;
 }
 
 .message.last-message.sent, .message.middle-message.sent {
-    border-top-right-radius: 1rem;
+    border-top-right-radius: 0.5rem;
     margin-right: 3rem;
 }
