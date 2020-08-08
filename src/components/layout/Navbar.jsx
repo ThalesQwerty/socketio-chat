@@ -4,6 +4,7 @@ import {
     Typography,
     AppBar,
     Toolbar,
+    Tooltip,
     IconButton
 } from "@material-ui/core";
 
@@ -22,9 +23,11 @@ export default props =>
                 QwertyChat!
             </Typography>
             <div style={{ display: 'flex', justifyContent: 'flex-end', flexGrow: '1' }}>
-                <IconButton onClick={props.toggleUserList}>
-                    <PeopleIcon/>
-                </IconButton>
+                <Tooltip title={props.userListVisible ? "Hide user list" : "Show user list"} placement="top">
+                    <IconButton onClick={props.toggleUserList}>
+                        <PeopleIcon/>
+                    </IconButton>
+                </Tooltip>
             </div>
         </Toolbar>
     </AppBar>

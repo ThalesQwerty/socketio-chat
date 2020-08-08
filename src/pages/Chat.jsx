@@ -43,7 +43,7 @@ class Chat extends React.Component {
                 display: 'flex',
                 flexDirection: 'column'
             }}>
-                <Navbar toggleUserList={this.toggleUserList} />
+                <Navbar toggleUserList={this.toggleUserList} userListVisible={this.state.layout.userList} />
                 <Grid container style={{ flexGrow: '1', overflow: 'hidden' }}>
                     <Main />
                     <Sidebar visible={this.state.layout.userList}/>
