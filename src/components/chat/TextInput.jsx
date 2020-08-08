@@ -18,7 +18,7 @@ export default (props) =>
         alignItems="stretch"
     >
         <Grid item className={STYLES.chatBubbleIcon}>
-            <ChatBubbleIcon />
+            <ChatBubbleIcon color="primary" />
         </Grid>
         <Grid item className={STYLES.textFieldParent}>
             <TextField 
@@ -30,7 +30,7 @@ export default (props) =>
                 InputLabelProps={{
                     className: STYLES.textFieldLabel
                 }}
-                variant="outlined" 
+                variant="filled" 
                 onKeyDown={props.onEnter} 
             />
         </Grid>
