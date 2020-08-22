@@ -23,7 +23,7 @@ export default props =>
             STYLES.hidden
         ])
     }>
-        <Box boxShadow={1} width={1} height={1} style={{ overflowX: "hidden", overflowY: "scroll" }}>
+        <Box boxShadow={1} width={1} height={1} className={STYLES.user_list}>
             <UserList/>
         </Box>
     </Grid>
