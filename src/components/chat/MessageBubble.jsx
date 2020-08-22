@@ -8,7 +8,7 @@ import {
     MultipleStyles
 } from "../../utils";
 
-import STYLES from "./chat.module.scss";
+import STYLE from "./chat.module.scss";
 
 export default props =>
     <Box 
@@ -16,9 +16,9 @@ export default props =>
         padding='1rem' 
         className={
             MultipleStyles([
-                STYLES.message,
-                STYLES[props.align],
-                STYLES[props.thread]
+                STYLE.message,
+                STYLE[props.align],
+                STYLE[props.thread]
             ])
         }
     >

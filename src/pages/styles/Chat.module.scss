@@ -1,0 +1,18 @@
+@import "../../styles/Variables.scss";
+
+.main_container {
+    height: 100%; 
+    width: 100%; 
+
+    max-width: 100rem;
+    max-height: 50rem;
+
+    display: flex;
+    flex-direction: column;
+}
+
+.messages_and_users {
+    flex-grow: 1;
+    overflow: hidden;
+    position: relative;
+}

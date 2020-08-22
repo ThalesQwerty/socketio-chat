@@ -1,4 +1,4 @@
-@import "./base.scss";
+@import "./Variables.scss";
 
 #root {
     flex-grow: 1;
@@ -7,7 +7,7 @@
 }
 
 html {
-    font-size: 16px;
+    font-size: $rem;
 }
 
 body {
@@ -16,7 +16,7 @@ body {
     width: 100vw;
     height: 100vh;
     overflow: hidden;
-    color: $light0;
+    color: $txt_default_color;
     background-color: $bg_body;
 }
 

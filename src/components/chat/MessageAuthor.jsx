@@ -6,14 +6,14 @@ import {
     MultipleStyles
 } from "../../utils";
 
-import STYLES from "./chat.module.scss";
+import STYLE from "./chat.module.scss";
 
 export default props =>
 <>
     <div className={
         MultipleStyles([
-            STYLES.author,
-            STYLES[props.align]
+            STYLE.author,
+            STYLE[props.align]
         ])
     }>
         <small>

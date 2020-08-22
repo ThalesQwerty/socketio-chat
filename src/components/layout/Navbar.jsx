@@ -13,16 +13,16 @@ import {
     People as PeopleIcon
 } from "@material-ui/icons"
 
-import STYLES from "./layout.module.scss";
+import STYLE from "./layout.module.scss";
 
 export default props =>
-    <AppBar position="relative" style={{ height: '4rem' }}>
+    <AppBar position="relative">
         <Toolbar>
-            <Typography style={{ display: 'flex', alignItems: 'center' }}>
-                <ForumIcon style={{ marginRight: '0.5rem' }} />
+            <Typography className={STYLE.title}>
+                <ForumIcon className={STYLE.icon} />
                 QwertyChat!
             </Typography>
-            <div style={{ display: 'flex', justifyContent: 'flex-end', flexGrow: '1' }}>
+            <div className={STYLE.buttons}>
                 <Tooltip title={props.userListVisible ? "Hide user list" : "Show user list"} placement="top">
                     <IconButton onClick={props.toggleUserList}>
                         <PeopleIcon/>

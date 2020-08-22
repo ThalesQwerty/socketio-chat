@@ -2,6 +2,8 @@ import React from "react";
 
 import UserDisplay from "./UserDisplay";
 
+import STYLE from "./styles/user.module.scss";
+
 import {
     List
 } from "@material-ui/core";
@@ -44,7 +46,7 @@ const loadUsers = (users) => {
 
 export default (props) =>
 <>
-    <List component="nav" aria-label="main mailbox folders"  style={{ marginBottom: '1rem' }}>
+    <List component="nav" aria-label="main mailbox folders" className={STYLE.user_list}>
     {
         loadUsers(USERS)
     }

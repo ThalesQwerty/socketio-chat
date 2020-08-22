@@ -9,7 +9,7 @@ import {
 import MessageList from "../chat/MessageList";
 import TextInput from "../chat/TextInput";
 
-import STYLES from "./layout.module.scss";
+import STYLE from "./layout.module.scss";
 
 import {
     Message,
@@ -78,8 +78,7 @@ class Main extends React.Component {
 
     render() {
         return (
-            // <Grid item xl={10} lg={9} md={8} sm={7} xs={6} style={{ paddingTop: '2.5rem', paddingLeft: '0.5rem', paddingBottom: '3rem' }}>
-            <Grid item className={STYLES.main}>
+            <Grid item className={STYLE.main}>
                 <div>
                     <MessageList messages={this.state.messages} />
                     <TextInput onEnter={this.handleEnter} />
