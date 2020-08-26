@@ -1,0 +1,32 @@
+.sidebar {
+    width: 20rem;
+    height: 100% !important;
+    transition-duration: 0.4s;
+    transition-timing-function: ease-out;
+    background-color: $bg_sidebar;
+}
+
+.sidebar.hidden {
+    transform: translateX(20rem);
+    margin-left: -20rem;
+    transition-timing-function: ease-in;
+}
+
+.user_list {
+    overflow-x: hidden; 
+    overflow-y: scroll;
+}
+
+@media (max-width: $lg) {
+    .sidebar {
+        position: absolute;
+        right: 0;
+        width: 100vw;
+        z-index: 1;
+    }
+
+    .sidebar.hidden {
+        transform: translateX(100vw);
+        margin-left: 0;
+    }
+}

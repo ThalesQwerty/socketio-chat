@@ -1,34 +1,4 @@
-@import "../../base.scss";
-
-.main {
-    /* padding-left: 1rem;
-    padding-bottom: 3rem; */
-    flex-grow: 1;
-    height: 100% !important;
-}
-
-.main > div {
-    display: flex;
-    flex-direction: column;
-    align-items: stretch;
-    height: 100%;
-    background-color: $bg_messagesbox;
-}
-
-.sidebar {
-    width: 20rem;
-    height: 100% !important;
-    transition-duration: 0.4s;
-    transition-timing-function: ease-out;
-    background-color: $bg_sidebar;
-}
-
-.sidebar.hidden {
-    transform: translateX(20rem);
-    margin-left: -20rem;
-    transition-timing-function: ease-in;
-}
-
-// .navbar {
-    
-// }
+@import "../../styles/Variables.scss";
+@import "./styles/navbar.scss";
+@import "./styles/main_div.scss";
+@import "./styles/sidebar.scss";

@@ -4,6 +4,8 @@ import Navbar from "../components/layout/Navbar";
 import Sidebar from "../components/layout/Sidebar";
 import Main from "../components/layout/Main";
 
+import STYLE from "./styles/Chat.module.scss";
+
 import {
     Container,
     Grid,
@@ -19,6 +21,7 @@ class Chat extends React.Component {
                 userList: true
             }
         }
+
     }
 
     toggleUserList = (e) => {
@@ -33,19 +36,10 @@ class Chat extends React.Component {
 
     render() {
         return (
-            <Box boxShadow={1} style={{ 
-                height: '100%', 
-                width: '100%', 
-        
-                maxWidth: '100rem',
-                maxHeight: '50rem',
-        
-                display: 'flex',
-                flexDirection: 'column'
-            }}>
+            <Box boxShadow={1} className={STYLE.main_container}>
                 <Navbar toggleUserList={this.toggleUserList} userListVisible={this.state.layout.userList} />
-                <Grid container style={{ flexGrow: '1', overflow: 'hidden' }}>
-                    <Main />
+                <Grid container className={STYLE.messages_and_users}>
+                    <Main messages={this.props.messages} functions={this.props.functions} />
                     <Sidebar visible={this.state.layout.userList}/>
                 </Grid>
             </Box>

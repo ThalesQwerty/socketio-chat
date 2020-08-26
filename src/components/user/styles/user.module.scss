@@ -1,0 +1,26 @@
+@import "../../../styles/Variables.scss";
+
+.default_image_container {
+    // background-color: gray;
+
+    border-radius: 50%;
+
+    width: 2rem;
+    height: 2rem;
+
+    display: flex;
+    justify-content: center;
+    align-content: center;
+
+    // margin-right: 1rem;
+    // margin-left: 0rem;
+}
+
+.default_image {
+    font-size: 2rem !important;
+    color: rgba(0, 0, 0, 0.5);
+}
+
+.user_list {
+    margin-bottom: 1rem;
+}

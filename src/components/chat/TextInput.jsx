@@ -10,25 +10,25 @@ import {
     ChatBubble as ChatBubbleIcon
 } from "@material-ui/icons";
 
-import STYLES from "./chat.module.scss";
+import STYLE from "./chat.module.scss";
 
 export default (props) =>
     <Grid container 
-        className={STYLES.textDiv} 
+        className={STYLE.textDiv} 
         alignItems="stretch"
     >
-        <Grid item className={STYLES.chatBubbleIcon}>
+        <Grid item className={STYLE.chatBubbleIcon}>
             <ChatBubbleIcon color="primary" />
         </Grid>
-        <Grid item className={STYLES.textFieldParent}>
+        <Grid item className={STYLE.textFieldParent}>
             <TextField 
                 label="Type your message"
-                className={STYLES.textField}
+                className={STYLE.textField}
                 InputProps={{
-                    className: STYLES.textFieldValue
+                    className: STYLE.textFieldValue
                 }}
                 InputLabelProps={{
-                    className: STYLES.textFieldLabel
+                    className: STYLE.textFieldLabel
                 }}
                 variant="filled" 
                 onKeyDown={props.onEnter} 

@@ -1,29 +1,26 @@
 import React from "react";
 
+import STYLE from "./styles/user.module.scss";
+
 import {
-    Person as PersonIcon
+    Box
+} from "@material-ui/core";
+
+import {
+    Person as PersonIcon, Style
 } from "@material-ui/icons"
 
 const defaultImage = (props) => (
-    <div style={{
-        backgroundColor: props.user.color || 'gray',
-        borderRadius: '50%',
-
-        width: '2rem',
-        height: '2rem',
-
-        display: 'flex',
-        justifyContent: 'center',
-        alignContent: 'center',
-
-        marginRight: props.marginRight || '1rem',
-        marginLeft: props.marginLeft || '0rem'
-    }}>
-        <PersonIcon style={{
-            fontSize: '2em',
-            color: 'rgba(0, 0, 0, 0.5)'
-        }} />
-    </div>
+    <Box
+        className={STYLE.default_image_container} 
+        style={{
+            marginRight: props.marginRight || '1rem',
+            marginLeft: props.marginLeft || '0rem',
+            backgroundColor: props.user.color || 'gray'
+        }}
+    >
+        <PersonIcon className={STYLE.default_image} />
+    </Box>
 );
 
 export default (props) =>

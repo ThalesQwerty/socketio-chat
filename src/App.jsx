@@ -1,31 +1,71 @@
 import React from "react";
-import { createMuiTheme } from '@material-ui/core/styles';
 import { ThemeProvider } from '@material-ui/styles';
-import { red, lightBlue } from '@material-ui/core/colors';
+
+import THEME from "./styles/MaterialUITheme.js";
+import STYLE from "./styles/App.module.scss";
+
+import {
+    Message,
+    User
+} from "./classes";
 
 
-
+import Client from "./Client.js";
 import Chat from "./pages/Chat";
 
-import "./App.scss";
+import "./styles/App.scss";
 
-const THEME = createMuiTheme({
-    palette: {
-      type: 'dark',
-      primary: {
-          main: red[800]
-      },
-      secondary: {
-          main: lightBlue[400]
-      }
-    },
-});
 
-export default () =>
-<>
-    <ThemeProvider theme={THEME}>
-        <div style={{ height: '100vh', width: '100%', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
-            <Chat/>
-        </div>
-    </ThemeProvider>
-</>
+class App extends React.Component {
+    constructor(props) {
+        super(props);
+
+        this.state = {
+            messages: []
+        };
+
+        Client.subscribe(this);
+    }
+
+    sendMessage = (message, callback = () => { }) => {
+        Client.send("message", message);
+        this.newMessage(message, callback);
+    }
+
+    receiveMessage = (message) => {
+        this.newMessage(
+            new Message(message.content)
+                .align(Message.ALIGN_LEFT)
+                .author(User.random())
+        );
+    }
+
+    newMessage = (message, callback = () => { }) => {
+        let newArray = this.state.messages.slice(0);
+        newArray.push(message);
+
+        this.setState({
+            messages: newArray
+        }, callback);
+    }
+
+    render() {
+        return (
+            <>
+                <ThemeProvider theme={THEME}>
+                    <div className={STYLE.app_container}>
+                        <Chat
+                            messages={this.state.messages}
+                            functions={{
+                                newMessage: this.newMessage,
+                                sendMessage: this.sendMessage
+                            }}
+                        />
+                    </div>
+                </ThemeProvider>
+            </>
+        )
+    }
+}
+
+export default App;

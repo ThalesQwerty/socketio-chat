@@ -12,18 +12,18 @@ import {
     MultipleStyles
 } from "../../utils";
 
-import STYLES from "./layout.module.scss";
+import STYLE from "./layout.module.scss";
 
 export default props =>
     <Grid item boxShadow={1} className={
         props.visible ? 
-        STYLES.sidebar : 
+        STYLE.sidebar : 
         MultipleStyles([
-            STYLES.sidebar,
-            STYLES.hidden
+            STYLE.sidebar,
+            STYLE.hidden
         ])
     }>
-        <Box boxShadow={1} width={1} height={1} style={{ overflowX: "hidden", overflowY: "scroll" }}>
+        <Box boxShadow={1} width={1} height={1} className={STYLE.user_list}>
             <UserList/>
         </Box>
     </Grid>

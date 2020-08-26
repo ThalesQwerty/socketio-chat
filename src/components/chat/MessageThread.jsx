@@ -20,7 +20,7 @@ import Message from "../../classes/Message.js";
 
 import UserImage from "../user/UserImage";
 
-import STYLES from "./chat.module.scss";
+import STYLE from "./chat.module.scss";
 
 class MessageThread extends React.Component {
     constructor(props) {
@@ -28,7 +28,7 @@ class MessageThread extends React.Component {
 
         this.state = {
             style: {
-                div: STYLES.fadeInWait
+                div: STYLE.fadeInWait
             }
         };
 
@@ -48,8 +48,8 @@ class MessageThread extends React.Component {
                 className={
                     MultipleStyles([
                         this.state.style.div, 
-                        STYLES.messageParentDiv, 
-                        STYLES[this.props.info.align]
+                        STYLE.messageParentDiv, 
+                        STYLE[this.props.info.align]
                     ])
                 } 
             >
@@ -65,7 +65,7 @@ class MessageThread extends React.Component {
                     />
                 </If>
                 <div 
-                    className={STYLES.messageChildDiv}
+                    className={STYLE.messageChildDiv}
                 >
                     <If condition={firstMessage}>
                         <MessageAuthor 
@@ -91,7 +91,7 @@ class MessageThread extends React.Component {
 
             this.setState({
                 style: {
-                    div: STYLES.fadeInDone
+                    div: STYLE.fadeInDone
                 }
             });
         }, 100);

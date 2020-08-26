@@ -13,7 +13,7 @@ import {
     Message
 } from "../../classes";
 
-import STYLES from "./chat.module.scss";
+import STYLE from "./chat.module.scss";
 
 class MessageList extends React.Component {
     constructor(props) {
@@ -56,7 +56,7 @@ class MessageList extends React.Component {
 
     render() {    
         return (
-            <div ref={this.scrollable} className={STYLES.messageBox}>
+            <div ref={this.scrollable} className={STYLE.messageBox}>
                 {
                     this.printMessages(this.props.messages)
                 }        
