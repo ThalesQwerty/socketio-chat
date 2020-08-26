@@ -19,21 +19,11 @@ import {
 class Main extends React.Component {
     constructor(props) {
         super(props);
-
-        const messages = [
-            new Message("Hello there, how are you?")
-                .align(Message.ALIGN_LEFT)
-                .author(User.random())
-        ];
-
-        this.state = {
-            messages: messages
-        };
     }
 
-    handleEnter = (e) => {
+    handleEnter = e => {
         if (e.keyCode == 13 && e.target.value.trim().length > 0) {
-            this.newMessage(
+            this.props.functions.newMessage(
                 new Message(e.target.value.trim())
                     .align(Message.ALIGN_RIGHT)
                     .author(User.me())
@@ -43,9 +33,9 @@ class Main extends React.Component {
 
             e.target.value = "";
         }
-    }
+    };
 
-    mockAnswer() {
+    mockAnswer = () => {
         const answers = [
             "Ok",
             "Alright",
@@ -58,29 +48,20 @@ class Main extends React.Component {
         setTimeout(() => {
             const selected = answers[Math.floor(Math.random() * answers.length)];
 
-            this.newMessage(
+            this.props.functions.newMessage(
                 new Message(selected)
                     .align(Message.ALIGN_LEFT)
                     .author(User.random())
             );
 
         }, Math.random() * 3000 + 2000);
-    }
-
-    newMessage = (message, callback = () => { }) => {
-        let newArray = this.state.messages.slice(0);
-        newArray.push(message);
-
-        this.setState({
-            messages: newArray
-        }, callback);
-    }
+    };
 
     render() {
         return (
             <Grid item className={STYLE.main}>
                 <div>
-                    <MessageList messages={this.state.messages} />
+                    <MessageList messages={this.props.messages} />
                     <TextInput onEnter={this.handleEnter} />
                 </div>
             </Grid>

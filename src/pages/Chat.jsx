@@ -21,6 +21,7 @@ class Chat extends React.Component {
                 userList: true
             }
         }
+
     }
 
     toggleUserList = (e) => {
@@ -38,7 +39,7 @@ class Chat extends React.Component {
             <Box boxShadow={1} className={STYLE.main_container}>
                 <Navbar toggleUserList={this.toggleUserList} userListVisible={this.state.layout.userList} />
                 <Grid container className={STYLE.messages_and_users}>
-                    <Main />
+                    <Main messages={this.props.messages} functions={this.props.functions} />
                     <Sidebar visible={this.state.layout.userList}/>
                 </Grid>
             </Box>
