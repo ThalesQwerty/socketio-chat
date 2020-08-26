@@ -23,38 +23,14 @@ class Main extends React.Component {
 
     handleEnter = e => {
         if (e.keyCode == 13 && e.target.value.trim().length > 0) {
-            this.props.functions.newMessage(
+            this.props.functions.sendMessage(
                 new Message(e.target.value.trim())
                     .align(Message.ALIGN_RIGHT)
                     .author(User.me())
             );
 
-            this.mockAnswer();
-
             e.target.value = "";
         }
-    };
-
-    mockAnswer = () => {
-        const answers = [
-            "Ok",
-            "Alright",
-            "Yeah...",
-            "That's cool!",
-            "That's amazing!",
-            "I'm listening"
-        ];
-
-        setTimeout(() => {
-            const selected = answers[Math.floor(Math.random() * answers.length)];
-
-            this.props.functions.newMessage(
-                new Message(selected)
-                    .align(Message.ALIGN_LEFT)
-                    .author(User.random())
-            );
-
-        }, Math.random() * 3000 + 2000);
     };
 
     render() {

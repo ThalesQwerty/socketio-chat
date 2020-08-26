@@ -20,17 +20,24 @@ class App extends React.Component {
     constructor(props) {
         super(props);
 
-        const messages = [
-            new Message("Hello there, how are you?")
-                .align(Message.ALIGN_LEFT)
-                .author(User.random())
-        ];
-
         this.state = {
-            messages: messages
+            messages: []
         };
 
         Client.subscribe(this);
+    }
+
+    sendMessage = (message, callback = () => { }) => {
+        Client.send("message", message);
+        this.newMessage(message, callback);
+    }
+
+    receiveMessage = (message) => {
+        this.newMessage(
+            new Message(message.content)
+                .align(Message.ALIGN_LEFT)
+                .author(User.random())
+        );
     }
 
     newMessage = (message, callback = () => { }) => {
@@ -50,7 +57,8 @@ class App extends React.Component {
                         <Chat
                             messages={this.state.messages}
                             functions={{
-                                newMessage: this.newMessage
+                                newMessage: this.newMessage,
+                                sendMessage: this.sendMessage
                             }}
                         />
                     </div>
