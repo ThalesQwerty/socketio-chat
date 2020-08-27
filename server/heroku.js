@@ -7,13 +7,12 @@ const path = require('path');
 const port = process.env.PORT || 3000;
 const app = express();
 
-const DIR = __dirname.replace("\\server", "");
+const DIR = __dirname.replace(/\/server|\\server/, "");
 console.log("Build path: " + DIR);
 
 app.listen(port);
 console.log("Listening on " + port);
 
-app.use(express.static(DIR));
 app.use(express.static(path.join(DIR, 'build')));
 
 app.get('/ping', function (req, res) {
