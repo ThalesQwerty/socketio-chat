@@ -24,7 +24,7 @@ class App extends React.Component {
             messages: []
         };
 
-        Client.subscribe(this);
+        Client.subscribe(this, window.location.protocol + "//" + window.location.hostname);
     }
 
     sendMessage = (message, callback = () => { }) => {
