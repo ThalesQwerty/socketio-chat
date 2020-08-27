@@ -23,7 +23,8 @@
     "typescript": "^4.0.2"
   },
   "scripts": {
-    "socket": "node server/Server.js",
+    "heroku": "node server/heroku.js",
+    "socket": "node server/local.js",
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
