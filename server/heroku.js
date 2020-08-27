@@ -23,5 +23,5 @@ app.get('/*', function (req, res) {
   res.sendFile(path.join(DIR, 'build', 'index.html'));
 });
 
-Server.start();
+Server.start(app);
 

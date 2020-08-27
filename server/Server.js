@@ -1,13 +1,15 @@
 class Server {
     static io = require("socket.io")();
+    static port = null;
 
     static users = [];
 
     static start = (app) => {
         const server = require("http").createServer(app);
         this.io = require("socket.io").listen(server);
+        this.port = process.env.PORT || 8080;
 
-        server.listen(process.env.PORT || process.env.SOCKET_DEFAULT_PORT);
+        server.listen(this.port);
 
         this.io.set('origins', '*:*');
 
