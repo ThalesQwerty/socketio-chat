@@ -1,7 +1,7 @@
 import openSocket from 'socket.io-client';
 
 class Client {
-    static io = openSocket('http://localhost:8080');
+    static io = openSocket(process.env.SOCKET_URL);
 
     static send(event, data) {
         this.io.emit(event, data);
