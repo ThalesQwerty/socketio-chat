@@ -1,11 +1,14 @@
 class Server {
     static io = require("socket.io")();
-    static port = 8080;
 
     static users = [];
 
-    static start = () => {
-        this.io.listen(this.port);
+    static start = (app) => {
+        const server = require("http").createServer(app);
+        this.io = require("socket.io").listen(server);
+
+        server.listen(process.env.PORT || process.env.SOCKET_DEFAULT_PORT);
+
         this.io.set('origins', '*:*');
 
         console.log("SocketIO listening on " + this.port);
