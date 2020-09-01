@@ -4,6 +4,10 @@ const path = require("path");
 const http = require("http");
 const socketIO = require("socket.io");
 
+const User = require("./User");
+
+const Events = require("../src/events.json");
+
 class Server {
     static io = socketIO();
     static port = 8080;
@@ -49,26 +53,27 @@ class Server {
 
         console.log("SocketIO listening on " + this.port);
 
-        this.io.on("connection", (client) => {
-            let user = this.newUser(client);
+        this.io.on(Events.SOCKET_IO_CONNECT, (client) => {
+            const oldList = User.list.map((x) => x);
+            let user = new User(client);
 
-            client.on("message", function(data) {
+            client.on(Events.MESSAGE_NEW, function(data) {
                 console.log(data);
-                client.emit("test", {one: 1});
-                client.broadcast.emit("message", data);
+                client.broadcast.emit(Events.MESSAGE_NEW, data);
             });
 
-            console.log("New client connected.");
+            client.on(Events.SOCKET_IO_DISCONNECT, function(data) {
+                client.broadcast.emit(Events.USER_LEFT_CHAT, user.id);
+                User.remove(user.id);
+            });
+
+            client.emit(Events.INFO_USER_LIST, oldList);
+            client.emit(Events.INFO_ME, user.me());
+
+            console.log(oldList);
+
+            client.broadcast.emit(Events.USER_JOINED_CHAT, user.public());
         });
-    }
-    
-    static newUser(client) {
-        return {
-            id: this.users.length > 0 ? 
-                this.users[this.users.length - 1].id + 1 
-                : 1,
-            client: client
-        };
     }
 }
 

@@ -21,10 +21,11 @@ class App extends React.Component {
         super(props);
 
         this.state = {
-            messages: []
+            messages: [],
+            users: []
         };
 
-        Client.subscribe(this, process.env.REACT_APP_SOCKET_URL || (window.location.protocol + "//" + window.location.hostname));
+        Client.start(this, process.env.REACT_APP_SOCKET_URL || (window.location.protocol + "//" + window.location.hostname));
     }
 
     sendMessage = (message, callback = () => { }) => {
@@ -49,6 +50,33 @@ class App extends React.Component {
         }, callback);
     }
 
+    addUser = (user, myself = false) => {
+        let users = this.state.users;
+
+        if (!myself) users.push(user);
+        else users.unshift(user);
+
+        this.setState({users: users});
+    }
+
+    setUsers = (users) => {
+        this.setState({users: users});
+    }
+
+    removeUser = (id) => {
+        let users = this.state.users;
+
+        for (let i = 0; i < users.length; i++) {
+            const user = users[i];
+            if (user.id == id) {
+                users.splice(i, 1);
+                break;
+            }
+        }
+
+        this.setState({users: users});
+    }
+
     render() {
         return (
             <>
@@ -56,6 +84,7 @@ class App extends React.Component {
                     <div className={STYLE.app_container}>
                         <Chat
                             messages={this.state.messages}
+                            users={this.state.users}
                             functions={{
                                 newMessage: this.newMessage,
                                 sendMessage: this.sendMessage

@@ -24,6 +24,6 @@ export default props =>
         ])
     }>
         <Box boxShadow={1} width={1} height={1} className={STYLE.user_list}>
-            <UserList/>
+            <UserList users={props.users}/>
         </Box>
     </Grid>

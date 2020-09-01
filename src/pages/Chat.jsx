@@ -40,7 +40,7 @@ class Chat extends React.Component {
                 <Navbar toggleUserList={this.toggleUserList} userListVisible={this.state.layout.userList} />
                 <Grid container className={STYLE.messages_and_users}>
                     <Main messages={this.props.messages} functions={this.props.functions} />
-                    <Sidebar visible={this.state.layout.userList}/>
+                    <Sidebar visible={this.state.layout.userList} users={this.props.users}/>
                 </Grid>
             </Box>
         );
