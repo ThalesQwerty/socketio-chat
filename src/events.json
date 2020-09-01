@@ -1,0 +1,20 @@
+{
+    "SOCKET_IO_CONNECT": "connect",
+    "SOCKET_IO_DISCONNECT": "disconnect",
+    "SOCKET_IO_CONNECT_ERROR": "connect_error",
+    "SOCKET_IO_ERROR": "error",
+    "SOCKET_IO_TIMEOUT": "connect_timeout",
+    "SOCKET_IO_PING": "ping",
+    "SOCKET_IO_PONG": "pong",
+
+    "CONNECTED": "connected",
+    "GET_INFO": "get info",
+    
+    "INFO_ME": "my info",
+    "INFO_USER_LIST": "user list", 
+
+    "USER_JOINED_CHAT": "user joined",
+    "USER_LEFT_CHAT": "user left",
+
+    "MESSAGE_NEW": "new message"
+}
