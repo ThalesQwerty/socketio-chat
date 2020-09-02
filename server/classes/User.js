@@ -1,14 +1,19 @@
 class User {
-    constructor(client, name = "User", color = "gray") {
-        this.id = User.list.length > 0 ? 
-            User.list[User.list.length - 1].id + 1 
-            : 1;
+    constructor(client, name = null, color = "gray") {
+        this.id = client.id;
 
+        if (name == null) name = "User " + this.id;
             
-        this.client = client.id;
         this.password = User.createPassword(32);
         this.name = name;
         this.color = color;
+
+        this.assignMessage = (message) => {
+            let clone = JSON.parse(JSON.stringify(message));
+            clone.attributes.author = this.public();
+            clone.attributes.align = "received";
+            return clone;
+        }
 
         this.public = () => {
             let clone = {};
@@ -22,7 +27,7 @@ class User {
         
         this.me = () => {
             let clone = this.public();
-            clone.name = "You";
+            clone.me = true;
             clone.password = this.password;
 
             return clone;
@@ -32,12 +37,21 @@ class User {
         User.list.push(this);
     }
 
+    static counter = 0;
     static publicVars = ["id", "name", "color"];
     static list = [];
 
-    static remove(id) {
-        let index = -1;
+    static find(id) {
+        for (let i = 0; i < User.list.length; i++) {
+            const user = User.list[i];
 
+            if (user.id == id) {
+                return User.list[i];
+            }
+        }
+    }
+
+    static remove(id) {
         for (let i = 0; i < User.list.length; i++) {
             const user = User.list[i];
 

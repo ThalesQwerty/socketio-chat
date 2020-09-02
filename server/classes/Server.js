@@ -6,7 +6,7 @@ const socketIO = require("socket.io");
 
 const User = require("./User");
 
-const Events = require("../src/events.json");
+const Events = require("../../src/data/events.json");
 
 class Server {
     static io = socketIO();
@@ -19,7 +19,7 @@ class Server {
         const app = express();
         const server = http.createServer(app);
 
-        const DIR = __dirname.replace(/\/server|\\server/, "");
+        const DIR = __dirname.replace(/\/server\/classes|\\server\\classes/, "");
         console.log("Build path: " + DIR);
 
         server.listen(port);
@@ -29,11 +29,11 @@ class Server {
         app.use(express.static(path.join(DIR, 'build')));
 
         app.get('/ping', function (req, res) {
-        return res.send('pong');
+            return res.send('pong');
         });
 
         app.get('/*', function (req, res) {
-        res.sendFile(path.join(DIR, 'build', 'index.html'));
+            res.sendFile(path.join(DIR, 'build', 'index.html'));
         });
 
         return server;
@@ -54,25 +54,36 @@ class Server {
         console.log("SocketIO listening on " + this.port);
 
         this.io.on(Events.SOCKET_IO_CONNECT, (client) => {
-            const oldList = User.list.map((x) => x);
-            let user = new User(client);
 
-            client.on(Events.MESSAGE_NEW, function(data) {
-                console.log(data);
-                client.broadcast.emit(Events.MESSAGE_NEW, data);
+            client.on(Events.USER_CREATE, function (data) {
+
+                const oldList = User.list.map((x) => x);
+                let user = new User(client);
+
+                console.log(user.name + " connected.");
+
+                client.on(Events.MESSAGE_CREATE, function (data) {
+
+                    let message = user.assignMessage(data);
+                    console.log(message);
+                    client.broadcast.emit(Events.MESSAGE_CREATE, message);
+
+                });
+
+                client.on(Events.SOCKET_IO_DISCONNECT, function (data) {
+
+                    client.broadcast.emit(Events.USER_DELETE, user.id);
+                    User.remove(user.id);
+
+                });
+
+                client.emit(Events.USER_LIST, oldList);
+                client.emit(Events.USER_CREATE, user.me());
+
+                client.broadcast.emit(Events.USER_CREATE, user.public());
+
             });
 
-            client.on(Events.SOCKET_IO_DISCONNECT, function(data) {
-                client.broadcast.emit(Events.USER_LEFT_CHAT, user.id);
-                User.remove(user.id);
-            });
-
-            client.emit(Events.INFO_USER_LIST, oldList);
-            client.emit(Events.INFO_ME, user.me());
-
-            console.log(oldList);
-
-            client.broadcast.emit(Events.USER_JOINED_CHAT, user.public());
         });
     }
 }
