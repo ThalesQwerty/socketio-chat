@@ -18,7 +18,7 @@ function Main (props) {
 
     const handleEnter = e => {
         if (e.keyCode === 13 && e.target.value.trim().length > 0) {
-            this.props.functions.sendMessage(
+            props.functions.sendMessage(
                 new Message(e.target.value.trim())
                     .align(Message.ALIGN_RIGHT)
                     .author(User.me)
