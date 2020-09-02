@@ -1,9 +1,7 @@
 import React from "react";
 
 import {
-    Typography,
     Grid,
-    TextField
 } from "@material-ui/core";
 
 import MessageList from "../chat/MessageList";
@@ -16,13 +14,10 @@ import {
     User
 } from "../../classes/";
 
-class Main extends React.Component {
-    constructor(props) {
-        super(props);
-    }
+function Main (props) {
 
-    handleEnter = e => {
-        if (e.keyCode == 13 && e.target.value.trim().length > 0) {
+    const handleEnter = e => {
+        if (e.keyCode === 13 && e.target.value.trim().length > 0) {
             this.props.functions.sendMessage(
                 new Message(e.target.value.trim())
                     .align(Message.ALIGN_RIGHT)
@@ -33,16 +28,15 @@ class Main extends React.Component {
         }
     };
 
-    render() {
-        return (
-            <Grid item className={STYLE.main}>
-                <div>
-                    <MessageList messages={this.props.messages} />
-                    <TextInput onEnter={this.handleEnter} />
-                </div>
-            </Grid>
-        );
-    }
+    return (
+        <Grid item className={STYLE.main}>
+            <div>
+                <MessageList messages={props.messages} />
+                <TextInput onEnter={handleEnter} />
+            </div>
+        </Grid>
+    );
+
 }
 
 export default Main;

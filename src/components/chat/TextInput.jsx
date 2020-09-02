@@ -1,7 +1,6 @@
 import React from "react";
 
 import {
-    Typography,
     Grid,
     TextField
 } from "@material-ui/core";

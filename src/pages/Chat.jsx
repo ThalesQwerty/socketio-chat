@@ -7,7 +7,6 @@ import Main from "../components/layout/Main";
 import STYLE from "./styles/Chat.module.scss";
 
 import {
-    Container,
     Grid,
     Box
 } from "@material-ui/core";

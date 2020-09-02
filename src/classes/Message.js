@@ -2,8 +2,8 @@ import EasilyReadable from "../utils/EasilyReadable";
 
 class Message extends EasilyReadable {
     constructor(content) {
-        super();
-
+        super(content);
+        
         this.content = content;
         this.attributes = {
             align: Message.ALIGN_LEFT,

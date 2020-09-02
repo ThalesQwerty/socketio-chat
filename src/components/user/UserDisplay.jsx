@@ -5,10 +5,7 @@ import If from "../../utils/If";
 import STYLE from "./styles/user.module.scss";
 
 import { 
-    Box,
     ListItem,
-    ListItemIcon,
-    ListItemText,
     Divider
 } from "@material-ui/core";
 

@@ -1,11 +1,7 @@
 import React from "react";
-import ReactDOM from "react-dom";
 
 import {
-    MessageAuthor,
-    MessageBubble,
     MessageThread,
-    TextInput
 } from ".";
 
 import {
@@ -51,7 +47,7 @@ class MessageList extends React.Component {
     shallScroll() {
         const div = this.scrollable.current;
 
-        return div && div.scrollTop == div.scrollHeight - div.offsetHeight;
+        return div && div.scrollTop === div.scrollHeight - div.offsetHeight;
     }
 
     render() {    

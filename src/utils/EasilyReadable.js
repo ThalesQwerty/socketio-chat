@@ -1,8 +1,4 @@
 class EasilyReadable {
-    constructor() {
-
-    }
-
     createFunctions(className, array, method) {
         for (const f of array) {
             className.prototype[f] = function(args) {

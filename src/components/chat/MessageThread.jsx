@@ -1,9 +1,5 @@
 import React from "react";
 
-import { 
-    Box
-} from "@material-ui/core";
-
 import {
     MultipleStyles,
     If
@@ -12,8 +8,6 @@ import {
 import {
     MessageAuthor,
     MessageBubble,
-    MessageList,
-    TextInput
 } from ".";
 
 import Message from "../../classes/Message.js";
@@ -41,7 +35,7 @@ class MessageThread extends React.Component {
     }
 
     render() {
-        const firstMessage = this.props.thread == Message.THREAD_SINGLE || this.props.thread == Message.THREAD_FIRST;
+        const firstMessage = this.props.thread === Message.THREAD_SINGLE || this.props.thread === Message.THREAD_FIRST;
         return (
             <div 
                 ref={this.div}
@@ -87,8 +81,6 @@ class MessageThread extends React.Component {
 
     componentDidMount() {
         setTimeout(() => {
-            const div = this.div.current.style;
-
             this.setState({
                 style: {
                     div: STYLE.fadeInDone

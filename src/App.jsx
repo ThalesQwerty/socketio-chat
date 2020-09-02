@@ -7,7 +7,6 @@ import THEME from "./styles/MaterialUITheme.js";
 import STYLE from "./styles/App.module.scss";
 
 import {
-    Message,
     User
 } from "./classes";
 
@@ -71,7 +70,7 @@ class App extends React.Component {
 
         for (let i = 0; i < users.length; i++) {
             const user = users[i];
-            if (user.id == id) {
+            if (user.id === id) {
                 users.splice(i, 1);
                 break;
             }

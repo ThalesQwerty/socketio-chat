@@ -1,7 +1,5 @@
 import React from "react";
 
-import UserName from "../user/UserImage";
-
 import {
     MultipleStyles
 } from "../../utils";

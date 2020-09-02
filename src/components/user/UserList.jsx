@@ -8,8 +8,6 @@ import {
     List
 } from "@material-ui/core";
 
-import User from "../../classes/User.js";
-
 const loadUsers = (users) => {
     const userList = [];
 

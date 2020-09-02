@@ -7,7 +7,7 @@ import {
 } from "@material-ui/core";
 
 import {
-    Person as PersonIcon, Style
+    Person as PersonIcon
 } from "@material-ui/icons"
 
 const defaultImage = (props) => (
