@@ -1,6 +1,8 @@
 import React from "react";
 import { ThemeProvider } from '@material-ui/styles';
 
+import Events from "./data/events.json";
+
 import THEME from "./styles/MaterialUITheme.js";
 import STYLE from "./styles/App.module.scss";
 
@@ -29,16 +31,12 @@ class App extends React.Component {
     }
 
     sendMessage = (message, callback = () => { }) => {
-        Client.send("message", message);
+        Client.send(Events.MESSAGE_CREATE, message);
         this.newMessage(message, callback);
     }
 
     receiveMessage = (message) => {
-        this.newMessage(
-            new Message(message.content)
-                .align(Message.ALIGN_LEFT)
-                .author(User.random())
-        );
+        this.newMessage(message);
     }
 
     newMessage = (message, callback = () => { }) => {
@@ -50,11 +48,16 @@ class App extends React.Component {
         }, callback);
     }
 
-    addUser = (user, myself = false) => {
+    addUser = (user) => {
         let users = this.state.users;
 
-        if (!myself) users.push(user);
-        else users.unshift(user);
+        if (user.me) {
+            User.me = user;
+            users.unshift(user);
+        }
+        else {
+            users.push(user);
+        } 
 
         this.setState({users: users});
     }

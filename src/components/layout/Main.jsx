@@ -26,7 +26,7 @@ class Main extends React.Component {
             this.props.functions.sendMessage(
                 new Message(e.target.value.trim())
                     .align(Message.ALIGN_RIGHT)
-                    .author(User.me())
+                    .author(User.me)
             );
 
             e.target.value = "";
