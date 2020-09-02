@@ -6,7 +6,7 @@ const socketIO = require("socket.io");
 
 const User = require("./User");
 
-const Events = require("../../src/data/events.json");
+const Events = require("../../src/data/socket_io_events.json");
 
 class Server {
     static io = socketIO();

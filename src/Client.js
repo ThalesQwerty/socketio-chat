@@ -1,6 +1,6 @@
 import openSocket from 'socket.io-client';
 
-import Events from "./data/events.json";
+import Events from "./data/socket_io_events.json";
 
 class Client {
     static io = null;

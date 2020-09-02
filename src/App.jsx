@@ -1,7 +1,7 @@
 import React from "react";
 import { ThemeProvider } from '@material-ui/styles';
 
-import Events from "./data/events.json";
+import Events from "./data/socket_io_events.json";
 
 import THEME from "./styles/MaterialUITheme.js";
 import STYLE from "./styles/App.module.scss";
