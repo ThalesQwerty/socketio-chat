@@ -58,7 +58,7 @@ class Server {
             client.on(Events.USER_CREATE, function (data) {
 
                 const oldList = User.list.map((x) => x);
-                let user = new User(client);
+                let user = new User(client, data || {});
 
                 console.log(user.name + " connected.");
 

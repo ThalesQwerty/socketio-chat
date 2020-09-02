@@ -1,12 +1,15 @@
-class User {
-    constructor(client, name = null, color = "gray") {
-        this.id = client.id;
+const Colors = require("../../src/data/random_user_colors.json");
 
-        if (name == null) name = "User " + this.id;
+class User {
+    constructor(client, data) {
+
+        User.counter = User.list.length > 0 ? User.counter + 1 : 1;
+
+        this.id = client.id;
             
         this.password = User.createPassword(32);
-        this.name = name;
-        this.color = color;
+        this.name = data.name || "User #" + User.counter;
+        this.color = data.color || Colors[Math.floor(Math.random() * Colors.length)];
 
         this.assignMessage = (message) => {
             let clone = JSON.parse(JSON.stringify(message));
