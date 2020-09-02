@@ -7,14 +7,9 @@
     "SOCKET_IO_PING": "ping",
     "SOCKET_IO_PONG": "pong",
 
-    "CONNECTED": "connected",
-    "GET_INFO": "get info",
-    
-    "INFO_ME": "my info",
-    "INFO_USER_LIST": "user list", 
+    "USER_CREATE": "add new user",
+    "USER_LIST": "get user list", 
+    "USER_DELETE": "user disconnected",
 
-    "USER_JOINED_CHAT": "user joined",
-    "USER_LEFT_CHAT": "user left",
-
-    "MESSAGE_NEW": "new message"
+    "MESSAGE_CREATE": "new message"
 }

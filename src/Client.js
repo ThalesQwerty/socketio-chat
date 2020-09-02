@@ -1,6 +1,6 @@
 import openSocket from 'socket.io-client';
 
-import Events from "./events.json";
+import Events from "./data/events.json";
 
 class Client {
     static io = null;
@@ -14,26 +14,22 @@ class Client {
 
         this.io.on(Events.SOCKET_IO_CONNECT, (data) => {
             console.log("OK");
-            Client.send(Events.GET_INFO);
+            Client.send(Events.USER_CREATE);
         });
 
-        this.io.on(Events.MESSAGE_NEW, (data) => {
+        this.io.on(Events.MESSAGE_CREATE, (data) => {
             app.receiveMessage(data);
         });
 
-        this.io.on(Events.USER_JOINED_CHAT, (data) => {
+        this.io.on(Events.USER_CREATE, (data) => {
             app.addUser(data);
         })
 
-        this.io.on(Events.USER_LEFT_CHAT, (data) => {
+        this.io.on(Events.USER_DELETE, (data) => {
             app.removeUser(data);
         })
 
-        this.io.on(Events.INFO_ME, (data) => {
-            app.addUser(data, true);
-        })
-
-        this.io.on(Events.INFO_USER_LIST, (data) => {
+        this.io.on(Events.USER_LIST, (data) => {
             app.setUsers(data);
         })
     }
