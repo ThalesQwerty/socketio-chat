@@ -6,22 +6,26 @@ import {
 } from "@material-ui/core";
 
 import {
-    ChatBubble as ChatBubbleIcon
-} from "@material-ui/icons";
+    If
+} from "../../utils";
 
-import STYLE from "./chat.module.scss";
+import STYLE from "./styles/text_input.module.scss";
 
 export default (props) =>
     <Grid container 
-        className={STYLE.textDiv} 
-        alignItems="stretch"
+        className={props.containerStyle} 
+        spacing={1}
+        alignItems="center"
+        justify="center"
     >
-        <Grid item className={STYLE.chatBubbleIcon}>
-            <ChatBubbleIcon color="primary" />
-        </Grid>
+        <If condition={props.icon != null}>
+            <Grid item className={STYLE.textFieldIcon}>
+                { props.icon }
+            </Grid>
+        </If>
         <Grid item className={STYLE.textFieldParent}>
             <TextField 
-                label="Type your message"
+                label={props.placeholder}
                 className={STYLE.textField}
                 InputProps={{
                     className: STYLE.textFieldValue

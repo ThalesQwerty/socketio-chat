@@ -4,8 +4,12 @@ import {
     Grid,
 } from "@material-ui/core";
 
+import {
+    ChatBubble as ChatBubbleIcon
+} from "@material-ui/icons";
+
 import MessageList from "../chat/MessageList";
-import TextInput from "../chat/TextInput";
+import TextInput from "../global/TextInput";
 
 import STYLE from "./layout.module.scss";
 
@@ -31,8 +35,15 @@ function Main (props) {
     return (
         <Grid item className={STYLE.main}>
             <div>
-                <MessageList messages={props.messages} />
-                <TextInput onEnter={handleEnter} />
+                <MessageList 
+                    messages={props.messages} 
+                />
+                <TextInput 
+                    onEnter={handleEnter} 
+                    icon={<ChatBubbleIcon color="primary" />}
+                    placeholder="Type your message"
+                    containerStyle={STYLE.textDiv} 
+                />
             </div>
         </Grid>
     );

@@ -7,7 +7,6 @@ const socketIO = require("socket.io");
 const User = require("./User");
 
 const Events = require("../../src/data/socket_io_events.json");
-
 class Server {
     static io = socketIO();
     static port = 8080;
@@ -20,6 +19,7 @@ class Server {
         const server = http.createServer(app);
 
         const DIR = __dirname.replace(/\/server\/classes|\\server\\classes/, "");
+
         console.log("Build path: " + DIR);
 
         server.listen(port);

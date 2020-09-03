@@ -1,0 +1,16 @@
+@import "../../styles/Variables.scss";
+@use "../../components/global/styles/text_input.scss";
+
+.main_container {
+    height: 100%; 
+    width: 100%; 
+
+    max-width: 50rem;
+    max-height: 50rem;
+
+    display: flex;
+    flex-direction: column;
+
+    align-items: center;
+    justify-content: center;
+}

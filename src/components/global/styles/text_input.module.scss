@@ -1,11 +1,6 @@
 @import "../../../styles/Variables.scss";
 
-.textDiv {
-    padding: 2rem 1.5rem;
-    background-color: $bg_typebox;
-}
-
-.chatBubbleIcon {
+.textFieldIcon {
     display: flex;
     align-items: center;
     margin-right: 0.5rem !important;
@@ -26,3 +21,4 @@
 .textFieldLabel {
     color: $light9 !important;
 }
+

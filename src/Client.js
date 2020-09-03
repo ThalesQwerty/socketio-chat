@@ -14,7 +14,6 @@ class Client {
 
         this.io.on(Events.SOCKET_IO_CONNECT, (data) => {
             console.log("OK");
-            Client.send(Events.USER_CREATE);
         });
 
         this.io.on(Events.MESSAGE_CREATE, (data) => {

@@ -10,9 +10,16 @@ import {
     User
 } from "./classes";
 
+import {
+    If
+} from "./utils";
 
 import Client from "./Client.js";
-import Chat from "./pages/Chat";
+
+import {
+    Chat,
+    Login
+} from "./pages";
 
 import "./styles/App.scss";
 
@@ -22,11 +29,16 @@ class App extends React.Component {
         super(props);
 
         this.state = {
+            currentPage: 0,
             messages: [],
             users: []
         };
 
         Client.start(this, process.env.REACT_APP_SOCKET_URL || (window.location.protocol + "//" + window.location.hostname));
+    }
+
+    login = (user) => {
+        Client.send(Events.USER_CREATE, user);
     }
 
     sendMessage = (message, callback = () => { }) => {
@@ -53,6 +65,7 @@ class App extends React.Component {
         if (user.me) {
             User.me = user;
             users.unshift(user);
+            this.setState({currentPage: 1});
         }
         else {
             users.push(user);
@@ -84,14 +97,23 @@ class App extends React.Component {
             <>
                 <ThemeProvider theme={THEME}>
                     <div className={STYLE.app_container}>
-                        <Chat
-                            messages={this.state.messages}
-                            users={this.state.users}
-                            functions={{
-                                newMessage: this.newMessage,
-                                sendMessage: this.sendMessage
-                            }}
-                        />
+                        <If condition={this.state.currentPage == 0}>
+                            <Login
+                                functions={{
+                                    login: this.login
+                                }}
+                            />
+                        </If>
+                        <If condition={this.state.currentPage == 1}>
+                            <Chat
+                                messages={this.state.messages}
+                                users={this.state.users}
+                                functions={{
+                                    newMessage: this.newMessage,
+                                    sendMessage: this.sendMessage
+                                }}
+                            />
+                        </If>
                     </div>
                 </ThemeProvider>
             </>
