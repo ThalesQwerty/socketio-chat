@@ -23,10 +23,12 @@
         right: 0;
         width: 100vw;
         z-index: 1;
+        transform: translateX(100vw);
+        margin-left: 0;
     }
 
     .sidebar.hidden {
-        transform: translateX(100vw);
+        transform: translateX(0);
         margin-left: 0;
     }
 }
