@@ -1,3 +1,5 @@
+@import "../../../styles/Variables.scss";
+
 .author {
     margin-bottom: 0.5rem;
 }
@@ -10,4 +12,11 @@
 .author.received {
     padding-left: 1rem;
     text-align: left;
+}
+
+@media (max-width: $md) {
+    .author {
+        padding-right: 0 !important;
+        padding-left: 0 !important;
+    }
 }

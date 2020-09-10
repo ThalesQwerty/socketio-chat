@@ -86,3 +86,23 @@
     border-top-right-radius: 0.5rem;
     margin-right: 3rem;
 }
+
+
+@media (max-width: $md) {
+    .messageParentDiv {
+        flex-direction: column !important;
+    }
+    
+    .messageParentDiv.sent {
+        align-items: flex-end;
+    }
+    
+    .messageParentDiv.received {
+        align-items: flex-start;
+    }
+
+    .message {
+        margin-right: 0 !important;
+        margin-left: 0 !important;
+    }
+}
