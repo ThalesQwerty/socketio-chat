@@ -2,6 +2,8 @@ import React from "react";
 
 import STYLE from "./styles/Login.module.scss";
 
+import Room from "../utils/MainRoom";
+
 import {
     Grid,
     Box,
@@ -35,7 +37,15 @@ class Login extends React.Component {
     render() {
         return (
             <>
-                <Box boxShadow={1} className={STYLE.main_container}>
+                <Box boxShadow={1} className={STYLE.mainContainer}>
+                    <div className={STYLE.welcomeText}>
+                        Welcome to { Room(
+                            this.props.room,
+                            "QwertyChat",
+                            <>room <strong>"{this.props.room}"</strong></>
+                        )}
+                        !
+                    </div>
                     <TextInput 
                         onEnter={this.handleEnter} 
                         placeholder="Type your username" 

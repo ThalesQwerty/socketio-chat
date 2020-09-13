@@ -1,7 +1,7 @@
 @import "../../styles/Variables.scss";
 @use "../../components/global/styles/text_input.scss";
 
-.main_container {
+.mainContainer {
     height: 100%; 
     width: 100%; 
 
@@ -13,4 +13,15 @@
 
     align-items: center;
     justify-content: center;
+}
+
+.welcomeText {
+    margin-bottom: 1rem;
+}
+
+@media (max-width: $md) {
+    .mainContainer {
+        padding-left: 1rem;
+        padding-right: 1rem;
+    }
 }

@@ -56,31 +56,34 @@ class Server {
         this.io.on(Events.SOCKET_IO_CONNECT, (client) => {
 
             client.on(Events.USER_CREATE, function (data) {
+                const room = data.room.length > 0 ? data.room : "main";
+                client.join(room);
 
                 const oldList = User.list.map((x) => x);
-                let user = new User(client, data || {});
+                let user = new User(client, data.user || {}, room);
 
-                console.log(user.name + " connected.");
+                console.log(user);
+                // console.log(user.name + " connected on " + data.room);
 
                 client.on(Events.MESSAGE_CREATE, function (data) {
 
                     let message = user.assignMessage(data);
                     console.log(message);
-                    client.broadcast.emit(Events.MESSAGE_CREATE, message);
+                    client.to(room).emit(Events.MESSAGE_CREATE, message);
 
                 });
 
                 client.on(Events.SOCKET_IO_DISCONNECT, function (data) {
 
-                    client.broadcast.emit(Events.USER_DELETE, user.id);
+                    client.to(room).emit(Events.USER_DELETE, user.id);
                     User.remove(user.id);
 
                 });
 
-                client.emit(Events.USER_LIST, oldList);
+                client.emit(Events.USER_LIST, oldList.filter(user => user.room == room));
                 client.emit(Events.USER_CREATE, user.me());
 
-                client.broadcast.emit(Events.USER_CREATE, user.public());
+                client.to(room).emit(Events.USER_CREATE, user.public());
 
             });
 

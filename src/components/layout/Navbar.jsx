@@ -1,5 +1,7 @@
 import React from "react";
 
+import Room from "../../utils/MainRoom";
+
 import {
     Typography,
     AppBar,
@@ -20,7 +22,7 @@ export default props =>
         <Toolbar>
             <Typography className={STYLE.title}>
                 <ForumIcon className={STYLE.icon} />
-                QwertyChat!
+                {Room(props.room, "QwertyChat!")}
             </Typography>
             <div className={STYLE.buttons}>
                 <Tooltip title={props.userListVisible ? "Hide user list" : "Show user list"} placement="top">

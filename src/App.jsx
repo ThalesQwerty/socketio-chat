@@ -15,6 +15,7 @@ import {
 } from "./utils";
 
 import Client from "./Client.js";
+import Room from "./utils/MainRoom";
 
 import {
     Chat,
@@ -30,6 +31,7 @@ class App extends React.Component {
 
         this.state = {
             currentPage: 0,
+            room: unescape(window.location.pathname.substring(1)),
             messages: [],
             users: []
         };
@@ -38,7 +40,7 @@ class App extends React.Component {
     }
 
     login = (user) => {
-        Client.send(Events.USER_CREATE, user);
+        Client.send(Events.USER_CREATE, {user: user, room: Room(this.state.room)});
     }
 
     sendMessage = (message, callback = () => { }) => {
@@ -99,6 +101,7 @@ class App extends React.Component {
                     <div className={STYLE.app_container}>
                         <If condition={this.state.currentPage == 0}>
                             <Login
+                                room={this.state.room}
                                 functions={{
                                     login: this.login
                                 }}
@@ -106,6 +109,7 @@ class App extends React.Component {
                         </If>
                         <If condition={this.state.currentPage == 1}>
                             <Chat
+                                room={this.state.room}
                                 messages={this.state.messages}
                                 users={this.state.users}
                                 functions={{
