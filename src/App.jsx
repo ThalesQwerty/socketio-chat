@@ -40,7 +40,7 @@ class App extends React.Component {
     }
 
     login = (user) => {
-        Client.send(Events.USER_CREATE, {user: user, room: Room(this.state.room)});
+        Client.send(Events.USER_CREATE, { user: user, room: Room(this.state.room) });
     }
 
     sendMessage = (message, callback = () => { }) => {
@@ -67,17 +67,17 @@ class App extends React.Component {
         if (user.me) {
             User.me = user;
             users.unshift(user);
-            this.setState({currentPage: 1});
+            this.setState({ currentPage: 1 });
         }
         else {
             users.push(user);
-        } 
+        }
 
-        this.setState({users: users});
+        this.setState({ users: users });
     }
 
     setUsers = (users) => {
-        this.setState({users: users});
+        this.setState({ users: users });
     }
 
     removeUser = (id) => {
@@ -91,7 +91,7 @@ class App extends React.Component {
             }
         }
 
-        this.setState({users: users});
+        this.setState({ users: users });
     }
 
     render() {
