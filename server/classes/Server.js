@@ -59,7 +59,7 @@ class Server {
                 const room = data.room.length > 0 ? data.room : "main";
                 client.join(room);
 
-                const oldList = User.list.map((x) => x);
+                const oldList = User.list.filter(user => user.room == room);
                 let user = new User(client, data.user || {}, room);
 
                 console.log(user);
@@ -80,7 +80,7 @@ class Server {
 
                 });
 
-                client.emit(Events.USER_LIST, oldList.filter(user => user.room == room));
+                client.emit(Events.USER_LIST, oldList);
                 client.emit(Events.USER_CREATE, user.me());
 
                 client.to(room).emit(Events.USER_CREATE, user.public());

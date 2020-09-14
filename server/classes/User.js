@@ -7,6 +7,7 @@ class User {
 
         this.id = client.id;
         this.room = room;
+        this.owner = room.length > 0 && room != "main" && User.list.filter(user => user.room == room).length == 0;
             
         this.password = User.createPassword(32);
         this.name = data.name || "User #" + User.counter;
@@ -42,7 +43,7 @@ class User {
     }
 
     static counter = 0;
-    static publicVars = ["id", "name", "color"];
+    static publicVars = ["id", "name", "color", "owner"];
     static list = [];
 
     static find(id) {
