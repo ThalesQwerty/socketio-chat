@@ -7,7 +7,8 @@ import THEME from "./styles/MaterialUITheme.js";
 import STYLE from "./styles/App.module.scss";
 
 import {
-    User
+    User,
+    Message
 } from "./classes";
 
 import {
@@ -71,6 +72,10 @@ class App extends React.Component {
         }
         else {
             users.push(user);
+
+            this.newMessage(
+                new Message(user.name + " has joined the room", Message.TYPE_EVENT)
+            );
         }
 
         this.setState({ users: users });
@@ -86,6 +91,9 @@ class App extends React.Component {
         for (let i = 0; i < users.length; i++) {
             const user = users[i];
             if (user.id === id) {
+                this.newMessage(
+                    new Message(user.name + " has left the room", Message.TYPE_EVENT)
+                );
                 users.splice(i, 1);
                 break;
             }

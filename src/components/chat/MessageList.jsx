@@ -2,6 +2,7 @@ import React from "react";
 
 import {
     MessageThread,
+    ChatEvent
 } from ".";
 
 import {
@@ -10,7 +11,6 @@ import {
 } from "../../classes";
 
 import STYLE from "./chat.module.scss";
-
 class MessageList extends React.Component {
     constructor(props) {
         super(props);
@@ -25,20 +25,30 @@ class MessageList extends React.Component {
             const message = messages[i];
             const lastMessage = messages[i - 1] || null;
 
-            console.log(message);
-            console.log(lastMessage);
+            switch (message.type) {
+                case Message.TYPE_MESSAGE:
 
-            let thread = lastMessage != null && User.same([message.attributes.author, lastMessage.attributes.author]) ? 
-                Message.THREAD_MIDDLE : Message.THREAD_SINGLE;
+                    let thread = lastMessage != null && lastMessage.type == Message.TYPE_MESSAGE && User.same([message.attributes.author, lastMessage.attributes.author]) ? 
+                        Message.THREAD_MIDDLE : Message.THREAD_SINGLE;
 
-            list.push(
-                <MessageThread 
-                    info={message.attributes}
-                    thread={thread}
-                >
-                    {message.content}
-                </MessageThread>
-            );
+                    list.push(
+                        <MessageThread 
+                            info={message.attributes}
+                            thread={thread}
+                        >
+                            {message.content}
+                        </MessageThread>
+                    );
+                    break;
+                case Message.TYPE_EVENT:
+                    list.push(
+                        <ChatEvent>
+                            {message.content}
+                        </ChatEvent>
+                    );
+                    break;
+            }
+            
         }
     
         return list;
