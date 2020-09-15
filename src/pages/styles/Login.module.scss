@@ -19,6 +19,10 @@
     margin-bottom: 1rem;
 }
 
+.cancelButton {
+    margin-top: 1rem !important;
+}
+
 @media (max-width: $md) {
     .mainContainer {
         padding-left: 1rem;

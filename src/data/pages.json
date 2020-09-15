@@ -1,0 +1,5 @@
+{
+    "LOGIN": 0,
+    "CHAT": 1,
+    "NEW_ROOM": 2
+}

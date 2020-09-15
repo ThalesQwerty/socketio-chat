@@ -59,10 +59,11 @@ class Server {
                 const room = data.room.length > 0 ? data.room : "main";
                 client.join(room);
 
+                User.remove(client.id);
+
                 const oldList = User.list.filter(user => user.room == room);
                 let user = new User(client, data.user || {}, room);
-
-                console.log(user);
+                
                 // console.log(user.name + " connected on " + data.room);
 
                 client.on(Events.MESSAGE_CREATE, function (data) {

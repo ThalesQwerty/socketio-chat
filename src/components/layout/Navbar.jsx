@@ -12,7 +12,8 @@ import {
 
 import {
     Forum as ForumIcon,
-    People as PeopleIcon
+    People as PeopleIcon,
+    AddCircle as AddCircleIcon
 } from "@material-ui/icons"
 
 import STYLE from "./layout.module.scss";
@@ -25,9 +26,14 @@ export default props =>
                 {Room(props.room, "QwertyChat!")}
             </Typography>
             <div className={STYLE.buttons}>
+                <Tooltip title="Create new room" placement="top">
+                    <IconButton onClick={props.createRoom}>
+                        <AddCircleIcon />
+                    </IconButton>
+                </Tooltip>
                 <Tooltip title={props.userListVisible ? "Hide user list" : "Show user list"} placement="top">
                     <IconButton onClick={props.toggleUserList}>
-                        <PeopleIcon/>
+                        <PeopleIcon />
                     </IconButton>
                 </Tooltip>
             </div>

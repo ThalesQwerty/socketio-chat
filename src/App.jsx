@@ -2,6 +2,7 @@ import React from "react";
 import { ThemeProvider } from '@material-ui/styles';
 
 import Events from "./data/socket_io_events.json";
+import Page from "./data/pages.json";
 
 import THEME from "./styles/MaterialUITheme.js";
 import STYLE from "./styles/App.module.scss";
@@ -31,8 +32,8 @@ class App extends React.Component {
         super(props);
 
         this.state = {
-            currentPage: 0,
-            room: unescape(window.location.pathname.substring(1)),
+            currentPage: Page.LOGIN,
+            room: unescape(window.location.hash.substring(1) || window.location.pathname.substring(1)),
             messages: [],
             users: []
         };
@@ -40,8 +41,18 @@ class App extends React.Component {
         Client.start(this, process.env.REACT_APP_SOCKET_URL || (window.location.protocol + "//" + window.location.hostname));
     }
 
-    login = (user) => {
-        Client.send(Events.USER_CREATE, { user: user, room: Room(this.state.room) });
+    login = (data) => {
+        if (data.room) {
+            this.setState({room: data.room});
+            window.location.hash = "#" + Room(data.room);
+        }
+
+        this.setState({
+            users: [],
+            messages: []
+        });
+        
+        Client.send(Events.USER_CREATE, { user: data.user, room: data.room || Room(this.state.room) });
     }
 
     sendMessage = (message, callback = () => { }) => {
@@ -68,7 +79,7 @@ class App extends React.Component {
         if (user.me) {
             User.me = user;
             users.unshift(user);
-            this.setState({ currentPage: 1 });
+            this.setState({ currentPage: Page.CHAT });
         }
         else {
             users.push(user);
@@ -102,12 +113,20 @@ class App extends React.Component {
         this.setState({ users: users });
     }
 
+    createRoom = () => {
+        this.setState({currentPage: Page.NEW_ROOM})
+    }
+
+    cancelCreateRoom = () => {
+        this.setState({ currentPage: Page.CHAT });
+    }
+
     render() {
         return (
             <>
                 <ThemeProvider theme={THEME}>
                     <div className={STYLE.app_container}>
-                        <If condition={this.state.currentPage == 0}>
+                        <If condition={this.state.currentPage == Page.LOGIN}>
                             <Login
                                 room={this.state.room}
                                 functions={{
@@ -115,14 +134,25 @@ class App extends React.Component {
                                 }}
                             />
                         </If>
-                        <If condition={this.state.currentPage == 1}>
+                        <If condition={this.state.currentPage == Page.NEW_ROOM}>
+                            <Login
+                                createRoom={true}
+                                user={User.me}
+                                functions={{
+                                    login: this.login,
+                                    cancelCreateRoom: this.cancelCreateRoom
+                                }}
+                            />
+                        </If>
+                        <If condition={this.state.currentPage == Page.CHAT}>
                             <Chat
                                 room={this.state.room}
                                 messages={this.state.messages}
                                 users={this.state.users}
                                 functions={{
                                     newMessage: this.newMessage,
-                                    sendMessage: this.sendMessage
+                                    sendMessage: this.sendMessage,
+                                    createRoom: this.createRoom,
                                 }}
                             />
                         </If>

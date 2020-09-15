@@ -36,7 +36,7 @@ class Chat extends React.Component {
     render() {
         return (
             <Box boxShadow={1} className={STYLE.main_container}>
-                <Navbar room={this.props.room} toggleUserList={this.toggleUserList} userListVisible={this.state.layout.userList} />
+                <Navbar room={this.props.room} createRoom={this.props.functions.createRoom} toggleUserList={this.toggleUserList} userListVisible={this.state.layout.userList} />
                 <Grid container className={STYLE.messages_and_users}>
                     <Main messages={this.props.messages} functions={this.props.functions} />
                     <Sidebar visible={this.state.layout.userList} users={this.props.users}/>
