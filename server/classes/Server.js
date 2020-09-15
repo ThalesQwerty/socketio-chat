@@ -7,6 +7,7 @@ const socketIO = require("socket.io");
 const User = require("./User");
 
 const Events = require("../../src/data/socket_io_events.json");
+const MessageType = require("../../src/data/message_types.json");
 class Server {
     static io = socketIO();
     static port = 8080;
@@ -63,6 +64,13 @@ class Server {
 
                 const oldList = User.list.filter(user => user.room == room);
                 let user = new User(client, data.user || {}, room);
+
+                if (user.owner) {
+                    client.emit(Events.MESSAGE_CREATE, {
+                        content: "You've created the room \"" + room + "\"! Copy the URL of this page to invite your friends!",
+                        type: MessageType.EVENT
+                    });
+                }
                 
                 // console.log(user.name + " connected on " + data.room);
 

@@ -1,4 +1,5 @@
 import EasilyReadable from "../utils/EasilyReadable";
+import MessageType from "../data/message_types.json";
 
 class Message extends EasilyReadable {
     constructor(content, type = Message.TYPE_MESSAGE) {
@@ -17,10 +18,15 @@ class Message extends EasilyReadable {
             return this;
         });
     }
+
+    setType(value) {
+        this.type = value;
+        return this;
+    }
     
     // TYPE
-    static TYPE_MESSAGE = "message";
-    static TYPE_EVENT = "event";
+    static TYPE_MESSAGE = MessageType.MESSAGE;
+    static TYPE_EVENT = MessageType.EVENT;
 
     // ALIGN
     static ALIGN_LEFT = "received";

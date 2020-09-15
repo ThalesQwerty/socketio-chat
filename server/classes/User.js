@@ -14,10 +14,10 @@ class User {
         this.color = data.color || Colors[Math.floor(Math.random() * Colors.length)];
 
         this.assignMessage = (message) => {
-            let clone = JSON.parse(JSON.stringify(message));
-            clone.attributes.author = this.public();
-            clone.attributes.align = "received";
-            return clone;
+            return {
+                content: message,
+                author: this.public()
+            }
         }
 
         this.public = () => {

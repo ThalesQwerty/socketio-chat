@@ -51,17 +51,22 @@ class App extends React.Component {
             users: [],
             messages: []
         });
-        
+
         Client.send(Events.USER_CREATE, { user: data.user, room: data.room || Room(this.state.room) });
     }
 
     sendMessage = (message, callback = () => { }) => {
-        Client.send(Events.MESSAGE_CREATE, message);
+        Client.send(Events.MESSAGE_CREATE, message.content);
         this.newMessage(message, callback);
     }
 
     receiveMessage = (message) => {
-        this.newMessage(message);
+        this.newMessage(
+            new Message(message.content)
+                .setType(message.type || Message.TYPE_MESSAGE)
+                .align(Message.ALIGN_LEFT)
+                .author(message.author)
+        );
     }
 
     newMessage = (message, callback = () => { }) => {
