@@ -1,11 +1,12 @@
 const Colors = require("../../src/data/random_user_colors.json");
 
 class User {
-    constructor(client, data, room = "main") {
+    constructor(client, data, room = "main", cookie = null) {
 
         User.counter = User.list.length > 0 ? User.counter + 1 : 1;
 
         this.id = client.id;
+        this.cookie = cookie;
         this.room = room;
         this.owner = room.length > 0 && room != "main" && User.list.filter(user => user.room == room).length == 0;
             

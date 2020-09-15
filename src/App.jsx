@@ -1,6 +1,8 @@
 import React from "react";
 import { ThemeProvider } from '@material-ui/styles';
 
+import Cookies from 'universal-cookie';
+
 import Events from "./data/socket_io_events.json";
 import Page from "./data/pages.json";
 
@@ -13,7 +15,8 @@ import {
 } from "./classes";
 
 import {
-    If
+    If,
+    RandomString
 } from "./utils";
 
 import Client from "./Client.js";
@@ -30,6 +33,14 @@ import "./styles/App.scss";
 class App extends React.Component {
     constructor(props) {
         super(props);
+
+        this.cookies = new Cookies();
+
+        if (!this.cookies.get('id')) {
+            this.cookies.set('id', new RandomString(32), { path: '/' });
+        }
+
+        console.log(new RandomString(32));
 
         this.state = {
             currentPage: Page.LOGIN,
@@ -52,7 +63,7 @@ class App extends React.Component {
             messages: []
         });
 
-        Client.send(Events.USER_CREATE, { user: data.user, room: data.room || Room(this.state.room) });
+        Client.send(Events.USER_CREATE, { user: data.user, room: data.room || Room(this.state.room), cookie: this.cookies.get('id') });
     }
 
     sendMessage = (message, callback = () => { }) => {

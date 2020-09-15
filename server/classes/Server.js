@@ -63,7 +63,9 @@ class Server {
                 User.remove(client.id);
 
                 const oldList = User.list.filter(user => user.room == room);
-                let user = new User(client, data.user || {}, room);
+                let user = new User(client, data.user || {}, room, data.cookie);
+
+                console.log(user);
 
                 if (user.owner) {
                     client.emit(Events.MESSAGE_CREATE, {
