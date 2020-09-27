@@ -11,6 +11,10 @@ import {
     Tooltip
 } from "@material-ui/core";
 
+import {
+    RemoveCircle as RemoveCircleIcon 
+} from '@material-ui/icons';
+
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCrown } from "@fortawesome/free-solid-svg-icons"
 
@@ -24,6 +28,13 @@ export default (props) =>
                 <Tooltip title="Room owner" placement="left">
                     <span className={STYLE.userIcon}>
                         <FontAwesomeIcon icon={faCrown} />
+                    </span>
+                </Tooltip>
+            </If>
+            <If condition={props.user.kickable}>
+                <Tooltip title="Kick user" placement="left">
+                    <span className={STYLE.userIcon}>
+                        <RemoveCircleIcon />
                     </span>
                 </Tooltip>
             </If>

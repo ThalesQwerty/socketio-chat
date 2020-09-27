@@ -29,7 +29,6 @@ import {
 
 import "./styles/App.scss";
 
-
 class App extends React.Component {
     constructor(props) {
         super(props);
@@ -39,8 +38,6 @@ class App extends React.Component {
         if (!this.cookies.get('id')) {
             this.cookies.set('id', new RandomString(32), { path: '/' });
         }
-
-        console.log(new RandomString(32));
 
         this.state = {
             currentPage: Page.LOGIN,
@@ -98,6 +95,7 @@ class App extends React.Component {
             this.setState({ currentPage: Page.CHAT });
         }
         else {
+            if (User.me.owner) user.kickable = true;
             users.push(user);
 
             this.newMessage(
