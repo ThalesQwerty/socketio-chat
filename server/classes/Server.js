@@ -21,8 +21,6 @@ class Server {
 
         const DIR = __dirname.replace(/\/server\/classes|\\server\\classes/, "");
 
-        console.log("Build path: " + DIR);
-
         server.listen(port);
         this.port = port;
 
