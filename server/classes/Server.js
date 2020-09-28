@@ -5,6 +5,7 @@ const http = require("http");
 const socketIO = require("socket.io");
 
 const User = require("./User");
+const Room = require("./Room");
 
 const Events = require("../../src/data/socket_io_events.json");
 const MessageType = require("../../src/data/message_types.json");
@@ -54,45 +55,75 @@ class Server {
 
         this.io.on(Events.SOCKET_IO_CONNECT, (client) => {
 
+            client.on(Events.ROOM_SELECT, function (data) {
+                const room = Room.find(data.id);
+
+                client.emit(Events.ROOM_SELECT, {
+                    roomExists: room != null,
+                });
+            });
+
+            client.on(Events.ROOM_CREATE, function (data) {
+                let room = Room.find(data.id);
+
+                if (!room) {
+                    room = new Room(data.id, data.user);
+                    client.emit(Events.ROOM_CREATE, room.id);
+                }
+                else {
+                    client.emit(Events.ROOM_CREATE, null);
+                }
+            });
+
             client.on(Events.USER_CREATE, function (data) {
-                const room = data.room.length > 0 ? data.room : "main";
-                client.join(room);
+                const room = Room.find(
+                    data.room.length > 0 ? data.room : "main"
+                );
 
-                User.remove(client.id);
+                if (room) {
+                    client.join(room.id);
 
-                const oldList = User.list.filter(user => user.room == room);
-                let user = new User(client, data.user || {}, room, data.cookie);
+                    User.remove(client.id);
 
-                console.log(user);
+                    const oldList = User.list.filter(user => user.room.id == room.id);
+                    let user = new User(client, data.user || {}, room, data.cookie);
 
-                if (user.owner) {
-                    client.emit(Events.MESSAGE_CREATE, {
-                        content: "You've created the room \"" + room + "\"! Copy the URL of this page to invite your friends!",
-                        type: MessageType.EVENT
+                    console.log(user);
+
+                    if (user.owner) {
+                        client.emit(Events.MESSAGE_CREATE, {
+                            content: "You've created the room \"" + room.id + "\"! Copy the URL of this page to invite your friends!",
+                            type: MessageType.EVENT
+                        });
+                    }
+                    
+                    // console.log(user.name + " connected on " + data.room);
+
+                    client.on(Events.MESSAGE_CREATE, function (data) {
+
+                        let message = user.assignMessage(data);
+                        console.log(message);
+                        client.to(room.id).emit(Events.MESSAGE_CREATE, message);
+
+                    });
+
+                    client.on(Events.SOCKET_IO_DISCONNECT, function (data) {
+
+                        client.to(room.id).emit(Events.USER_DELETE, user.id);
+                        User.remove(user.id);
+
+                    });
+
+                    client.emit(Events.USER_LIST, oldList);
+                    client.emit(Events.USER_CREATE, user.me());
+
+                    client.to(room.id).emit(Events.USER_CREATE, user.public());
+                }
+                else {
+                    client.emit(Events.USER_CREATE, {
+                        error: "Room not found."
                     });
                 }
-                
-                // console.log(user.name + " connected on " + data.room);
-
-                client.on(Events.MESSAGE_CREATE, function (data) {
-
-                    let message = user.assignMessage(data);
-                    console.log(message);
-                    client.to(room).emit(Events.MESSAGE_CREATE, message);
-
-                });
-
-                client.on(Events.SOCKET_IO_DISCONNECT, function (data) {
-
-                    client.to(room).emit(Events.USER_DELETE, user.id);
-                    User.remove(user.id);
-
-                });
-
-                client.emit(Events.USER_LIST, oldList);
-                client.emit(Events.USER_CREATE, user.me());
-
-                client.to(room).emit(Events.USER_CREATE, user.public());
 
             });
 

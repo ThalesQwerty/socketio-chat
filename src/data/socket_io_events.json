@@ -11,5 +11,8 @@
     "USER_LIST": "get user list", 
     "USER_DELETE": "user disconnected",
 
+    "ROOM_CREATE": "add new room",
+    "ROOM_SELECT": "get room info",
+
     "MESSAGE_CREATE": "new message"
 }

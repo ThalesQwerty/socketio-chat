@@ -5,9 +5,7 @@ import STYLE from "./styles/Login.module.scss";
 import Room from "../utils/MainRoom";
 
 import {
-    Grid,
     Box,
-    TextField,
     Button
 } from "@material-ui/core";
 
@@ -18,10 +16,6 @@ import {
 import {
     TextInput
 } from "../components/global";
-
-import {
-    Person as PersonIcon
-} from "@material-ui/icons";
 
 
 class Login extends React.Component {
@@ -60,7 +54,7 @@ class Login extends React.Component {
                 <Box boxShadow={1} className={STYLE.mainContainer}>
                     <div className={STYLE.welcomeText}>
                         {
-                            this.props.createRoom ?
+                            this.props.error || (this.props.createRoom ?
 
                                 "Create a new room"
 
@@ -71,18 +65,25 @@ class Login extends React.Component {
                                         Room(
                                             this.props.room,
                                             "QwertyChat!",
-                                            <>room <strong>"{this.props.room}"!</strong></>
+                                            <>room <strong>"{this.props.room.trim()}"!</strong></>
                                         )
                                     }
                                 </>
+
+                            )
                         }
                     </div>
-                    <TextInput 
-                        className={STYLE.textInput}
-                        onEnter={this.handleEnter}
-                        placeholder={this.props.createRoom ? "Type new room name" : "Type your username"}
-                    />
-                    <If condition={this.props.createRoom}>
+                    <If condition={this.props.showInput}>
+                        <TextInput 
+                            className={STYLE.textInput}
+                            onEnter={this.handleEnter}
+                            placeholder={this.props.createRoom ? "Type new room name" : "Type your username"}
+                        />
+                        <small className={STYLE.subText}>
+                            {this.props.subText}
+                        </small>
+                    </If>
+                    <If condition={this.props.buttonText}>
                         <Button 
                             className={STYLE.cancelButton} 
                             onClick={this.handleButton}
@@ -90,7 +91,7 @@ class Login extends React.Component {
                             color="primary" 
                             disableElevation
                         >
-                            Cancel
+                            { this.props.buttonText || "Button" }
                         </Button>
                     </If>
                 </Box>

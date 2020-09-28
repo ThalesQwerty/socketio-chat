@@ -40,37 +40,50 @@ class App extends React.Component {
         }
 
         this.state = {
-            currentPage: Page.LOGIN,
+            currentPage: Page.LOADING,
+            errorMessage: "",
             room: unescape(window.location.hash.substring(1) || window.location.pathname.substring(1)),
             messages: [],
             users: []
         };
 
-        Client.start(
-            process.env.REACT_APP_SOCKET_URL || (window.location.protocol + "//" + window.location.hostname),
-            [
-                // event listeners
-                [Events.SOCKET_IO_CONNECT, () => console.log("OK")],
-                [Events.MESSAGE_CREATE, this.receiveMessage],
-                [Events.USER_CREATE, this.addUser],
-                [Events.USER_DELETE, this.removeUser],
-                [Events.USER_LIST, this.setUsers]
-            ]
-        );
+        Client.start(process.env.REACT_APP_SOCKET_URL || (window.location.protocol + "//" + window.location.hostname));
+        
+        Client.events([
+            [Events.SOCKET_IO_CONNECT, () => setTimeout(() => Client.send(Events.ROOM_SELECT, {id: Room(this.state.room)}), 500)],
+                
+            [Events.MESSAGE_CREATE, this.receiveMessage],
+
+            [Events.USER_CREATE, this.addUser],
+            [Events.USER_DELETE, this.removeUser],
+            [Events.USER_LIST, this.setUsers],
+
+            [Events.ROOM_SELECT, this.getRoom]
+        ]);
     }
 
     login = (data) => {
         if (data.room) {
             this.setState({room: data.room});
             window.location.hash = "#" + Room(data.room);
+            Client.send(Events.ROOM_CREATE, { user: data.user, id: data.room }, (resp) => {
+                if (resp) {
+                    Client.send(Events.USER_CREATE, { user: data.user, room: resp || Room(this.state.room), cookie: this.cookies.get('id') });
+                } else {
+                    this.setState({
+                        errorMessage: "A room with this name already exists."
+                    });
+                }
+            });
+        }
+        else {
+            Client.send(Events.USER_CREATE, { user: data.user, room: data.room || Room(this.state.room), cookie: this.cookies.get('id') });
         }
 
         this.setState({
             users: [],
             messages: []
         });
-
-        Client.send(Events.USER_CREATE, { user: data.user, room: data.room || Room(this.state.room), cookie: this.cookies.get('id') });
     }
 
     sendMessage = (message, callback = () => { }) => {
@@ -145,6 +158,13 @@ class App extends React.Component {
         this.setState({ currentPage: Page.CHAT });
     }
 
+    getRoom = (data) => {
+        this.setState({ 
+            currentPage: data.roomExists ? Page.LOGIN : Page.ERROR,
+            errorMessage: data.roomExists ? "" : "Room not found."
+        })
+    }
+
     render() {
         return (
             <>
@@ -156,12 +176,27 @@ class App extends React.Component {
                                 functions={{
                                     login: this.login
                                 }}
+                                showInput={true}
                             />
                         </If>
                         <If condition={this.state.currentPage == Page.NEW_ROOM}>
                             <Login
                                 createRoom={true}
+                                buttonText="Cancel"
+                                showInput={true}
+                                subText={this.state.errorMessage}
                                 user={User.me}
+                                functions={{
+                                    login: this.login,
+                                    cancelCreateRoom: this.cancelCreateRoom
+                                }}
+                            />
+                        </If>
+                        <If condition={this.state.currentPage == Page.ERROR}>
+                            <Login
+                                createRoom={true}
+                                error={this.state.errorMessage}
+                                showInput={false}
                                 functions={{
                                     login: this.login,
                                     cancelCreateRoom: this.cancelCreateRoom
