@@ -9,28 +9,15 @@ class Client {
         this.io.emit(event, data);
     }
 
-    static start(app, url) {
+    static start(url, events) {
         this.io = openSocket(url); 
 
-        this.io.on(Events.SOCKET_IO_CONNECT, (data) => {
-            console.log("OK");
-        });
+        for (const pair of events) {
+            const name = pair[0];
+            const fn = pair[1];
 
-        this.io.on(Events.MESSAGE_CREATE, (data) => {
-            app.receiveMessage(data);
-        });
-
-        this.io.on(Events.USER_CREATE, (data) => {
-            app.addUser(data);
-        })
-
-        this.io.on(Events.USER_DELETE, (data) => {
-            app.removeUser(data);
-        })
-
-        this.io.on(Events.USER_LIST, (data) => {
-            app.setUsers(data);
-        })
+            this.io.on(name, (data) => fn(data));
+        }
     }
 }
 

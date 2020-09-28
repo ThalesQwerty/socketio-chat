@@ -46,7 +46,17 @@ class App extends React.Component {
             users: []
         };
 
-        Client.start(this, process.env.REACT_APP_SOCKET_URL || (window.location.protocol + "//" + window.location.hostname));
+        Client.start(
+            process.env.REACT_APP_SOCKET_URL || (window.location.protocol + "//" + window.location.hostname),
+            [
+                // event listeners
+                [Events.SOCKET_IO_CONNECT, () => console.log("OK")],
+                [Events.MESSAGE_CREATE, this.receiveMessage],
+                [Events.USER_CREATE, this.addUser],
+                [Events.USER_DELETE, this.removeUser],
+                [Events.USER_LIST, this.setUsers]
+            ]
+        );
     }
 
     login = (data) => {
