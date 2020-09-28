@@ -23,6 +23,6 @@ export default props =>
         ])
     }>
         <Box boxShadow={1} width={1} height={1} className={STYLE.user_list}>
-            <UserList users={props.users}/>
+            <UserList users={props.users} onKick={props.onKick}/>
         </Box>
     </Grid>

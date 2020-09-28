@@ -53,14 +53,18 @@ class Server {
 
         console.log("SocketIO listening on " + this.port);
 
+        const io = this.io;
+
         this.io.on(Events.SOCKET_IO_CONNECT, (client) => {
 
             client.on(Events.ROOM_SELECT, function (data) {
                 const room = Room.find(data.id);
 
+                let error = room ? null : "Room not found.";
+
                 client.emit(Events.ROOM_SELECT, {
-                    error: room ? null : "Room not found.",
-                    room: room ? room.id : null,
+                    error: error,
+                    room: error ? null : room.id,
                 });
             });
 
@@ -89,38 +93,87 @@ class Server {
                     const oldList = User.list.filter(user => user.room.id == room.id);
                     let user = new User(client, data.user || {}, room, data.cookie);
 
-                    console.log(user);
+                    if (room.gate(user)) {
 
-                    if (user.owner) {
-                        client.emit(Events.MESSAGE_CREATE, {
-                            content: "You've created the room \"" + room.id + "\"! Copy the URL of this page to invite your friends!",
-                            type: MessageType.EVENT
+                        console.log(user);
+
+                        if (user.owner) {
+                            client.emit(Events.MESSAGE_CREATE, {
+                                content: "You've created the room \"" + room.id + "\"! Copy the URL of this page to invite your friends!",
+                                type: MessageType.EVENT
+                            });
+                        }
+
+                        if (room.owner && room.owner.cookie == user.cookie && !User.find(room.owner.id)) {
+                            user.owner = true;
+                            room.owner = user;
+                        }
+                        
+                        client.on(Events.USER_DELETE, function (data) {
+                            const target = User.find(data.id);
+
+                            if (target) {
+                                if (user.owner && user.room.id == target.room.id) {
+
+                                    target.kicked = true;
+                                    const targetClient = io.sockets.connected[target.id];
+
+                                    const room = Room.find(user.room.id);
+
+                                    if (room && target.cookie !== user.cookie) {
+                                        room.blackList.push(target.cookie);
+                                    }
+
+                                    targetClient.to(room.id).emit(Events.MESSAGE_CREATE, {
+                                        content: target.name + " has been removed by " + user.name,
+                                        type: MessageType.EVENT
+                                    });
+
+                                    targetClient.emit(Events.USER_DELETE, {
+                                        user: target.public(),
+                                        message: "You've been kicked out by " + user.name + ", the room owner."
+                                    });
+                                    
+                                    targetClient.disconnect();
+                                }
+                            }
+                        });
+
+                        client.on(Events.MESSAGE_CREATE, function (data) {
+
+                            let message = user.assignMessage(data);
+                            console.log(message);
+                            client.to(room.id).emit(Events.MESSAGE_CREATE, message);
+
+                        });
+
+                        client.on(Events.SOCKET_IO_DISCONNECT, function (data) {
+                            const currentUser = User.find(user.id);
+
+                            if (currentUser) {
+                                client.to(room.id).emit(Events.USER_DELETE, {
+                                    user: currentUser.public(),
+                                    message: currentUser.kicked ? null : currentUser.name + " has left the room"
+                                });
+                                User.remove(user.id);
+                            }
+                        });
+
+                        client.emit(Events.USER_LIST, oldList);
+                        client.emit(Events.USER_CREATE, {user: user.me()});
+
+                        client.to(room.id).emit(Events.USER_CREATE, {user: user.public()});
+                    }
+                    else {
+                        User.remove(client.id);
+                        client.leave(room.id);
+                        client.emit(Events.USER_CREATE, {
+                            error: "You can't join this room anymore because you've been kicked out."
                         });
                     }
-                    
-                    // console.log(user.name + " connected on " + data.room);
-
-                    client.on(Events.MESSAGE_CREATE, function (data) {
-
-                        let message = user.assignMessage(data);
-                        console.log(message);
-                        client.to(room.id).emit(Events.MESSAGE_CREATE, message);
-
-                    });
-
-                    client.on(Events.SOCKET_IO_DISCONNECT, function (data) {
-
-                        client.to(room.id).emit(Events.USER_DELETE, user.id);
-                        User.remove(user.id);
-
-                    });
-
-                    client.emit(Events.USER_LIST, oldList);
-                    client.emit(Events.USER_CREATE, user.me());
-
-                    client.to(room.id).emit(Events.USER_CREATE, user.public());
                 }
                 else {
+                    client.leave(room.id);
                     client.emit(Events.USER_CREATE, {
                         error: "Room not found."
                     });

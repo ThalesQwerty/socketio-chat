@@ -108,45 +108,69 @@ class App extends React.Component {
         }, callback);
     }
 
-    addUser = (user) => {
-        let users = this.state.users;
-
-        if (user.me) {
-            User.me = user;
-            users.unshift(user);
-            this.setState({ currentPage: Page.CHAT });
+    addUser = (data) => {
+        if (data.error) {
+            this.setState({
+                errorMessage: data.error
+            });
         }
         else {
-            if (User.me.owner) user.kickable = true;
-            users.push(user);
+            const user = data.user;
+            let users = this.state.users;
 
-            this.newMessage(
-                new Message(user.name + " has joined the room", Message.TYPE_EVENT)
-            );
+            if (user.me) {
+                User.me = user;
+                users.unshift(user);
+                this.setState({ currentPage: Page.CHAT });
+            }
+            else {
+                if (User.me.owner) user.kickable = true;
+                users.push(user);
+
+                this.newMessage(
+                    new Message(user.name + " has joined the room", Message.TYPE_EVENT)
+                );
+            }
+
+            this.setState({ users: users });
         }
-
-        this.setState({ users: users });
     }
 
     setUsers = (users) => {
         this.setState({ users: users });
     }
 
-    removeUser = (id) => {
-        let users = this.state.users;
-
-        for (let i = 0; i < users.length; i++) {
-            const user = users[i];
-            if (user.id === id) {
-                this.newMessage(
-                    new Message(user.name + " has left the room", Message.TYPE_EVENT)
-                );
-                users.splice(i, 1);
-                break;
-            }
+    removeUser = (data) => {
+        if (data.user.id == User.me.id) {
+            this.setState({
+                currentPage: Page.ERROR,
+                errorMessage: data.message
+            });
         }
+        else {
+            let users = this.state.users;
 
-        this.setState({ users: users });
+            for (let i = 0; i < users.length; i++) {
+                const user = users[i];
+                if (user.id === data.user.id) {
+                    if (data.message) {
+                        this.newMessage(
+                            new Message(data.message, Message.TYPE_EVENT)
+                        );
+                    }
+                    users.splice(i, 1);
+                    break;
+                }
+            }
+
+            this.setState({ users: users });
+        }
+    }
+
+    kickUser = (user) => {
+        Client.send(Events.USER_DELETE, {
+            id: user.id
+        });
     }
 
     createRoom = () => {
@@ -172,6 +196,7 @@ class App extends React.Component {
                         <If condition={this.state.currentPage == Page.LOGIN}>
                             <Login
                                 room={this.state.room}
+                                subText={this.state.errorMessage}
                                 functions={{
                                     login: this.login
                                 }}
@@ -211,6 +236,7 @@ class App extends React.Component {
                                     newMessage: this.newMessage,
                                     sendMessage: this.sendMessage,
                                     createRoom: this.createRoom,
+                                    kickUser: this.kickUser
                                 }}
                             />
                         </If>
