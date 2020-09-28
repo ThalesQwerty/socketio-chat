@@ -59,7 +59,8 @@ class Server {
                 const room = Room.find(data.id);
 
                 client.emit(Events.ROOM_SELECT, {
-                    roomExists: room != null,
+                    error: room ? null : "Room not found.",
+                    room: room ? room.id : null,
                 });
             });
 
@@ -68,10 +69,10 @@ class Server {
 
                 if (!room) {
                     room = new Room(data.id, data.user);
-                    client.emit(Events.ROOM_CREATE, room.id);
+                    client.emit(Events.ROOM_CREATE, {room: room.id});
                 }
                 else {
-                    client.emit(Events.ROOM_CREATE, null);
+                    client.emit(Events.ROOM_CREATE, {error: "A room with this name already exists!"});
                 }
             });
 

@@ -67,12 +67,11 @@ class App extends React.Component {
             this.setState({room: data.room});
             window.location.hash = "#" + Room(data.room);
             Client.send(Events.ROOM_CREATE, { user: data.user, id: data.room }, (resp) => {
-                if (resp) {
-                    Client.send(Events.USER_CREATE, { user: data.user, room: resp || Room(this.state.room), cookie: this.cookies.get('id') });
-                } else {
-                    this.setState({
-                        errorMessage: "A room with this name already exists."
-                    });
+                this.setState({
+                    errorMessage: resp.error
+                });
+                if (!resp.error) {
+                    Client.send(Events.USER_CREATE, { user: data.user, room: resp.room || Room(this.state.room), cookie: this.cookies.get('id') });
                 }
             });
         }
@@ -160,8 +159,8 @@ class App extends React.Component {
 
     getRoom = (data) => {
         this.setState({ 
-            currentPage: data.roomExists ? Page.LOGIN : Page.ERROR,
-            errorMessage: data.roomExists ? "" : "Room not found."
+            currentPage: data.room != null ? Page.LOGIN : Page.ERROR,
+            errorMessage: data.error || ""
         })
     }
 
