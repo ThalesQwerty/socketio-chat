@@ -38,9 +38,9 @@ export default (props) => {
                 </If>
                 <If condition={props.user.kickable}>
                     <Tooltip title="Kick user" placement="left">
-                        <IconButton className={STYLE.userIcon} onClick={handleClick}>
+                        <span className={STYLE.kickUser} onClick={handleClick}>
                             <RemoveCircleIcon />
-                        </IconButton>
+                        </span>
                     </Tooltip>
                 </If>
             </ListItem>
