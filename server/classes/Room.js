@@ -8,12 +8,27 @@ class Room {
         this.id = id;
         this.owner = owner;
         this.blackList = [];
+        this.numUsers = 0;
             
         this.kickUser = userId => {
             this.blackList.push(
                 User.find(userId).cookie
             );
         };
+
+        this.addUser = () => {
+            this.numUsers ++;
+        }
+
+        this.removeUser = () => {
+            this.numUsers --;
+
+            if (this.numUsers <= 0 && this.id != "main") {
+                setTimeout(() => {
+                    if (this.numUsers <= 0) Room.remove(this.id);
+                }, 60000);
+            }
+        }
 
         this.gate = user => this.blackList.indexOf(user.cookie) < 0;
 

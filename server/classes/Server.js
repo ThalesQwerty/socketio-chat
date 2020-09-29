@@ -68,18 +68,6 @@ class Server {
                 });
             });
 
-            client.on(Events.ROOM_CREATE, function (data) {
-                let room = Room.find(data.id);
-
-                if (!room) {
-                    room = new Room(data.id, data.user);
-                    client.emit(Events.ROOM_CREATE, {room: room.id});
-                }
-                else {
-                    client.emit(Events.ROOM_CREATE, {error: "A room with this name already exists!"});
-                }
-            });
-
             client.on(Events.USER_CREATE, function (data) {
                 const room = Room.find(
                     data.room.length > 0 ? data.room : "main"
@@ -87,15 +75,13 @@ class Server {
 
                 if (room) {
                     client.join(room.id);
-
+                    
                     User.remove(client.id);
 
                     const oldList = User.list.filter(user => user.room.id == room.id);
                     let user = new User(client, data.user || {}, room, data.cookie);
 
                     if (room.gate(user)) {
-
-                        console.log(user);
 
                         if (user.owner) {
                             client.emit(Events.MESSAGE_CREATE, {
@@ -108,6 +94,18 @@ class Server {
                             user.owner = true;
                             room.owner = user;
                         }
+
+                        client.on(Events.ROOM_CREATE, function (data) {
+                            let room = Room.find(data.id);
+
+                            if (!room) {
+                                room = new Room(data.id, data.user);
+                                client.emit(Events.ROOM_CREATE, {room: room.id});
+                            }
+                            else {
+                                client.emit(Events.ROOM_CREATE, {error: "A room with this name already exists!"});
+                            }
+                        });
                         
                         client.on(Events.USER_DELETE, function (data) {
                             const target = User.find(data.id);
@@ -167,18 +165,17 @@ class Server {
                     else {
                         User.remove(client.id);
                         client.leave(room.id);
+                        user.room.removeUser();
                         client.emit(Events.USER_CREATE, {
                             error: "You can't join this room anymore because you've been kicked out."
                         });
                     }
                 }
                 else {
-                    client.leave(room.id);
                     client.emit(Events.USER_CREATE, {
                         error: "Room not found."
                     });
                 }
-
             });
 
         });

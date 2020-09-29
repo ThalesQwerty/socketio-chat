@@ -15,6 +15,8 @@ class User {
         this.name = data.name || "User #" + User.counter;
         this.color = data.color || Colors[Math.floor(Math.random() * Colors.length)];
 
+        this.room.addUser();
+
         this.assignMessage = (message) => {
             return {
                 content: message,
@@ -56,6 +58,7 @@ class User {
                 return User.list[i];
             }
         }
+        return null;
     }
 
     static remove(id) {
@@ -64,9 +67,11 @@ class User {
 
             if (user.id == id) {
                 User.list.splice(i, 1);
-                break;
+                user.room.removeUser();
+                return User.list[i];
             }
         }
+        return null;
     }
 
     static createPassword(length = 32) {
