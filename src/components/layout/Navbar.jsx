@@ -13,7 +13,8 @@ import {
 import {
     Forum as ForumIcon,
     People as PeopleIcon,
-    AddCircle as AddCircleIcon
+    AddCircle as AddCircleIcon,
+    GitHub as GitHubIcon
 } from "@material-ui/icons"
 
 import STYLE from "./layout.module.scss";
@@ -26,6 +27,11 @@ export default props =>
                 {Room(props.room, "QwertyChat!")}
             </Typography>
             <div className={STYLE.buttons}>
+                <Tooltip title="See on GitHub" placement="top">
+                    <IconButton onClick={() => window.open("https://github.com/ThalesQwerty/qwertychat")}>
+                        <GitHubIcon />
+                    </IconButton>
+                </Tooltip>
                 <Tooltip title="Create new room" placement="top">
                     <IconButton onClick={props.createRoom}>
                         <AddCircleIcon />
