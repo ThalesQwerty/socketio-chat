@@ -2,7 +2,7 @@
 
 A real-time chat made using React + Material UI on front-end, and NodeJS + SocketIO on back-end.
 
-[Click here to check it out!](https://qwertychat.herokuapp.com/).
+[Click here to check it out!](https://qwertychat.herokuapp.com/)
 
 You can open the chat in multiple tabs to test it.
 
