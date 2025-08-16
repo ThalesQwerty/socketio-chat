@@ -17,7 +17,7 @@ git clone https://github.com/ThalesQwerty/socketio-chat
 After that, install the dependencies:
 
 ```shell
-cd "QwertyChat"
+cd "socketio-chat"
 npm install
 ```
 
