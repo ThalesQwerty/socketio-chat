@@ -11,7 +11,7 @@ You can open the chat in multiple tabs to test it.
 Firstly, clone the repository into your computer:
 
 ```shell
-git clone https://github.com/ThalesQwerty/qwertychat "QwertyChat"
+git clone https://github.com/ThalesQwerty/socketio-chat
 ```
 
 After that, install the dependencies:
