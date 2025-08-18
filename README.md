@@ -11,13 +11,13 @@ You can open the chat in multiple tabs to test it.
 Firstly, clone the repository into your computer:
 
 ```shell
-git clone https://github.com/ThalesQwerty/socketio-chat
+git clone https://github.com/ThalesQwerty/qwertychat
 ```
 
 After that, install the dependencies:
 
 ```shell
-cd "socketio-chat"
+cd "qwertychat"
 npm install
 ```
 
